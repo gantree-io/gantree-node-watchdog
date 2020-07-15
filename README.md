@@ -4,6 +4,13 @@
 
 - Ensure you **do not** commit sensitive information
 
+## Table of Contents
+
+- [Gantree Node Watchdog](#gantree-node-watchdog)
+  - [Table of Contents](#table-of-contents)
+  - [Building](#building)
+    - [Requirements](#requirements)
+    - [Steps](#steps)
 
 ## Building
 
@@ -14,6 +21,8 @@
 | pipenv  | latest  | -                                             |
 | pyenv   | latest  | only if required python version not installed |
 | make    | latest  | -                                             |
+
+### Steps
 
 ```bash
 source configure.sh
