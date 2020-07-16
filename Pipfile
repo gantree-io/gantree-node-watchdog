@@ -6,10 +6,12 @@ verify_ssl = true
 [dev-packages]
 pyinstaller = "*"
 pylint = "*"
+black = "*"
+bandit = "*"
+mypy = "*"
 
 [packages]
 requests = "*"
-black = "*"
 
 [requires]
 python_version = "3.8"
