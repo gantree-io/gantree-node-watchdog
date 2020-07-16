@@ -27,7 +27,16 @@ def get_metrics(hostname):
 
 
 def main():
-    print("Hello, World!")
+    print("Hello, World!\n")
+
+    scrape = proxy_scrape(
+        hostname=env["hostname"],
+        node_secret=env["node_secret"],
+        ip_address=env["ip_address"],
+    ).json()
+    print(f"Proxy scrape response:\n{scrape}\n")
 
     metrics = get_metrics("http://127.0.0.1:9615").content
-    print(metrics)
+    print(
+        f"Metrics response (first 200 characters):\n{metrics.decode('utf-8')[:200]}...\n"
+    )
