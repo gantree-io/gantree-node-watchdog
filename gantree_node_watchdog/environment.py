@@ -2,6 +2,7 @@ import os
 
 
 def get_env_vars():
+    """Fetch required environment variables."""
     return {
         "hostname": os.getenv("GANTREE_NODE_WATCHDOG_HOSTNAME"),
         "api_key": os.getenv("GANTREE_NODE_WATCHDOG_API_KEY"),
