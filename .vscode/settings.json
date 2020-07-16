@@ -1,3 +1,4 @@
 {
-    "python.formatting.provider": "black"
+    "python.formatting.provider": "black",
+    "python.pythonPath": "/home/denver/.local/share/virtualenvs/gantree-node-watchdog-7ZNl9Vg1/bin/python"
 }
