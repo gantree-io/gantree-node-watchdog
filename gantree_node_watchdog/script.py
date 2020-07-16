@@ -14,10 +14,11 @@ def register(hostname, api_key, project_id, ip_address):
     )
 
 
-def proxy_scrape(hostname, node_secret):
+def proxy_scrape(hostname, node_secret, ip_address):
     return requests.post(
         f"{hostname}/clientNode/proxyScrape",
         headers={"Authorization": f"Node-Secret {node_secret}"},
+        json={"ipAddress": ip_address},
     )
 
 
