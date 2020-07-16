@@ -7,6 +7,13 @@ env = get_env_vars()
 
 
 
+
+def get_metrics(hostname):
+    return requests.get(f"{hostname}/metrics")
+
+
 def main():
-    response = requests.get('http://127.0.0.1:9615/metrics')
-    print(response.content)
+    print("Hello, World!")
+
+    metrics = get_metrics("http://127.0.0.1:9615").content
+    print(metrics)
