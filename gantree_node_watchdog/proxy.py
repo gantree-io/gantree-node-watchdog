@@ -44,4 +44,14 @@ class Proxy:
             headers={"Authorization": f"Node-Secret {node_secret}"},
         )
 
+    @printStatus(METRICS_MESSAGE)
+    @expect200
+    def metrics(self, hostname, node_secret, scrape_id, metrics_response):
+        return requests.post(
+            f"{hostname}/clientNode/proxyMetrics",
+            headers={"Authorization": f"Node-Secret {node_secret}"},
+            json={"scrapeId": scrape_id, "metricsResponse": metrics_response},
+        )
+
+
 proxy = Proxy()
