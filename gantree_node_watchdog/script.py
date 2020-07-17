@@ -45,6 +45,8 @@ def main():
         ip_address=config.ip_address,
         client_id="node1",  # TODO: MUST NOT BE STATIC
     )
+    if isinstance(registration, Exception):
+        raise registration
 
     print()  # newline for neatness
 
