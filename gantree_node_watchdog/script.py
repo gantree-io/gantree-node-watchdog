@@ -11,6 +11,8 @@ from .metrics import metrics
 from .proxy import proxy
 from .utils import ascii_splash, Statistics
 
+colorama.init()
+
 env = get_env_vars()
 
 
