@@ -14,6 +14,7 @@ class Expected200Error(Exception):
         self.res = res
 
 
+# TODO: add coloured OK's
 class printStatus:
     def __init__(
         self,
