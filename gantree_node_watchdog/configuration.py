@@ -109,7 +109,16 @@ class Configuration:
             value = "None" if value is None else value
             if origin is not None:
                 if self._censor_values:
-                    string += f"| {key:<{longest_option}} | {origin:<{longest_origin}} | {value[:2] + '#' * (len(value)-4) + value[-2:]:<{longest_value}} |\n"
+                    censored_value = (
+                        value[:2] + "#" * (len(value) - 4) + value[-2:]
+                        if len(value) >= 4
+                        else value
+                    )
+                    string += (
+                        f"| {key:<{longest_option}} |"
+                        + f" {origin:<{longest_origin}} |"
+                        + f" {censored_value:<{longest_value}} |\n"
+                    )
                 else:
                     string += f"| {key:<{longest_option}} | {origin:<{longest_origin}} | {value:<{longest_value}} |\n"
 
