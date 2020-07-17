@@ -43,7 +43,7 @@ class printStatus:
                         print(self.on_fail + self.suffix)
                         return res
                 else:
-                    print("CRIT (Invalid value returned from fail condition function)")
+                    return TypeError("Fail condition didn't return a bool")
 
             for sc in self.skip_conditions:
                 skip = sc(res)
@@ -51,6 +51,8 @@ class printStatus:
                     if skip is True:
                         print(self.on_skip + self.suffix)
                         return res
+                else:
+                    return TypeError("Skip condition didn't return a bool")
 
             print(self.on_success + self.suffix)
             return res
