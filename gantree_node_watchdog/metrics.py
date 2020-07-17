@@ -23,3 +23,9 @@ class Metrics:
     def _get(self, hostname, timeout):
         return requests.get(f"{hostname}/metrics", timeout=timeout)
 
+    @expect200
+    @printStatus(GET_MESSAGE, fail_conditions=[is_false])
+    def get(self, hostname, timeout=5):
+        """Get local metrics."""
+        return self._get(hostname=hostname, timeout=timeout)
+
