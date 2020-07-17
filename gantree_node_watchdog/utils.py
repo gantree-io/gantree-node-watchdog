@@ -47,9 +47,20 @@ class printStatus:
 
             for sc in self.skip_conditions:
                 skip = sc(res)
+                skip_reason = None
+
+                if isinstance(skip, tuple):
+                    """If the skip condition returns a tuple, unpack it."""
+                    if len(skip) == 2:
+                        skip, skip_reason = skip
+
                 if isinstance(skip, bool):
                     if skip is True:
-                        print(self.on_skip + self.suffix)
+                        print(
+                            self.on_skip
+                            + (f" ({skip_reason})" if skip_reason else "")
+                            + self.suffix
+                        )
                         return res
                 else:
                     return TypeError("Skip condition didn't return a bool")
