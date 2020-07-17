@@ -50,6 +50,7 @@ class Configuration:
         string = ""
         longest_key = 0
         longest_origin = 0
+        longest_value = 0
 
         for key in self._key_origins:
 
