@@ -29,3 +29,4 @@ class Metrics:
         """Get local metrics."""
         return self._get(hostname=hostname, timeout=timeout)
 
+metrics = Metrics()
