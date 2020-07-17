@@ -46,25 +46,31 @@ class printStatus:
         return wrapper_printStatus
 
 
-def expect200(func):
+class expect200:
     """Return runtime error if response status code isn't 200."""
 
-    def wrapper_expect200(*args, **kwargs):
-        res = func(*args, **kwargs)
-        if not isinstance(res, requests.Response):
-            return TypeError(
-                f"Response instance not returned from decorated function, instead got {type(res)}"
-            )
-        if res.ok:
-            return res
-        else:
-            return Expected200Error(
-                res,
-                f"Expected 200, got {res.status_code}: {res.reason}"
-                + f"\nContent: {res.json()['message']}",
-            )
+    def __init__(self, allowlist=[]):
+        self.allowlist = allowlist
 
-    return wrapper_expect200
+    def __call__(self, func):
+        def wrapper_expect200(*args, **kwargs):
+            res = func(*args, **kwargs)
+            if not isinstance(res, requests.Response):
+                return TypeError(
+                    f"Response instance not returned from decorated function, instead got {type(res)}"
+                )
+            if res.ok:
+                return res
+            elif res.status_code in self.allowlist:
+                return res
+            else:
+                return Expected200Error(
+                    res,
+                    f"Expected 200, got {res.status_code}: {res.reason}"
+                    + f"\nContent: {res.content.decode('utf-8')}",
+                )
+
+        return wrapper_expect200
 
 
 def ascii_splash(art, fore, back, banner=False):
