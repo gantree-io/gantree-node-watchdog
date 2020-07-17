@@ -25,7 +25,7 @@ class Configuration:
             raise TypeError("censor_values must be bool")
         self._censor_values = censor_values
 
-        """Load any values from environment variables matching an attribute"""
+        """Load any values from environment variables matching an attribute."""
         for key in self._keys:
             if getattr(self, key) is None:
                 env_var = "GANTREE_NODE_WATCHDOG_" + key.upper()
@@ -34,7 +34,7 @@ class Configuration:
                     setattr(self, key, val)
                     self._key_origins[key] = "Environment Variable"
 
-        """Load any values in the configuration file matching an attribute"""
+        """Load any values in the configuration file matching an attribute."""
         if config_file is not None:
             with open(config_file, "r") as f:
                 data = json.load(f)
