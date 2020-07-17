@@ -75,7 +75,7 @@ def expect200(func):
     return wrapper_expect200
 
 
-def asciiSplash(art, fore, back, banner=False):
+def ascii_splash(art, fore, back, banner=False):
     lines = art.split("\n")
     t_columns, _t_lines = shutil.get_terminal_size((80, 20))
     for line_n in range(len(lines)):
