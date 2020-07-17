@@ -2,6 +2,7 @@
 import requests
 import colorama
 import shutil
+from typing import List, Callable
 
 from .conditions import is_exception
 from .exceptions import Expected200Error
@@ -16,14 +17,18 @@ class printStatus:
         on_fail: str = (
             colorama.Fore.WHITE + colorama.Back.RED + "FAIL" + colorama.Style.RESET_ALL
         ),
+        on_skip: str = (colorama.Fore.YELLOW + "SKIP" + colorama.Style.RESET_ALL),
         suffix: str = "",
-        fail_conditions=[],
+        fail_conditions: List[Callable[[str], None]] = [],
+        skip_conditions: List[Callable[[str], None]] = [],
     ):
         self.action = action
         self.on_success = on_success
         self.on_fail = on_fail
+        self.on_skip = on_skip
         self.suffix = suffix
         self.fail_conditions = [is_exception, *fail_conditions]
+        self.skip_conditions = [*skip_conditions]
 
     def __call__(self, func):
         def wrapper_printStatus(*args, **kwargs):
@@ -39,6 +44,13 @@ class printStatus:
                         return res
                 else:
                     print("CRIT (Invalid value returned from fail condition function)")
+
+            for sc in self.skip_conditions:
+                skip = sc(res)
+                if isinstance(skip, bool):
+                    if skip is True:
+                        print(self.on_skip + self.suffix)
+                        return res
 
             print(self.on_success + self.suffix)
             return res
