@@ -70,6 +70,7 @@ class Configuration:
                 if len_value > longest_value:
                     longest_value = len_value
 
+        # TODO: cut off table if it exceeds term columns (or alternative)
         string += f"| {'OPTION':<{longest_key}} | {'ORIGIN':<{longest_origin}} | {'VALUE':<{longest_value}} |\n"
         string += f"| {'-' * longest_key} | {'-' * longest_origin} | {'-' * longest_value} |\n"
         for key in self._key_origins:
