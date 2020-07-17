@@ -1,3 +1,5 @@
+"""Binary entry point."""
+
 import requests
 import os
 
