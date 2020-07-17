@@ -57,6 +57,21 @@ def main():
             node_id=reg_json["nodeId"], node_secret=reg_json["nodeSecret"]
         )
 
+    if not config._has_registration_details():
+        print(
+            "\n"
+            + "⮞ Your node is already registered, but you don't"
+            + " have a node_id and node_secret stored."
+            + "\n⮞ If this is a new node, please use a different client_id."
+            + "\n⮞ If this is an already registered node with the correct"
+            + " client_id, please de-register and re-register it."
+            + "\n⮞ For security reasons we cannot send your node_id and"
+            + " node_secret again after you initially register your node."
+            + "\n"
+        )
+        raise RuntimeError(
+            "Missing registration details for already registered client_id"
+        )
 
     print()  # newline for neatness
 
