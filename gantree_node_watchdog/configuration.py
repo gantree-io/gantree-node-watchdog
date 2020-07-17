@@ -8,7 +8,7 @@ from typing import Dict, Union
 class Configuration:
     """Stores configuration options sourced from various origins."""
 
-    def __init__(self, config_file=None):
+    def __init__(self, config_file: str = None, censor_values: bool = True) -> None:
         """See class docstring."""
         self.proxy_hostname = None
         self.metrics_hostname = None
@@ -21,6 +21,9 @@ class Configuration:
         self._key_origins: Dict[str, Union[None, str]] = {
             key: None for key in self._keys
         }
+        if not isinstance(censor_values, bool):
+            raise TypeError("censor_values must be bool")
+        self._censor_values = censor_values
 
         """Load any values from environment variables matching an attribute"""
         for key in self._keys:
