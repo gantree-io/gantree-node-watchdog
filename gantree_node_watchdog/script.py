@@ -51,6 +51,7 @@ def main():
     while True:
         try:
             stats.print_oneline()
+            print()
 
             # TODO: create timer decorator for this method
             scrape = proxy.scrape(
@@ -73,6 +74,7 @@ def main():
             )
 
             stats.success()
+            print()
 
         except KeyboardInterrupt:
             print("\nExiting...")
