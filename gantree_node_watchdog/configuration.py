@@ -49,6 +49,15 @@ class Configuration:
                             setattr(self, key, val)
                             self._key_origins[key] = "Configuration File"
 
+        """Load default values."""
+        # TODO: configuration defaults
+
+        """Prompt for missing values."""
+        if self.proxy_hostname is None:
+            # write to config
+            # apply to attribute
+            self.proxy_hostname = input("Proxy hostname: ")
+
     def __repr__(self):
         """Represent the configuration as a table of options and origins."""
         string = ""
