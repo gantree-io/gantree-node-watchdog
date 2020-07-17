@@ -38,15 +38,13 @@ def main():
     elif metrics_accessible is False:
         raise RuntimeError("Unable to get metrics from local machine. Exiting early.")
 
-    # registration = proxy.register(
-    #     hostname=config.proxy_hostname,
-    #     api_key=config.api_key,
-    #     project_id=config.project_id,
-    #     ip_address=config.ip_address,
-    #     client_id="node1",  # TODO: MUST NOT BE STATIC
-    # )
-    # if isinstance(registration, Exception):
-    #     raise registration
+    registration = proxy.register(
+        hostname=config.proxy_hostname,
+        api_key=config.api_key,
+        project_id=config.project_id,
+        ip_address=config.ip_address,
+        client_id="node1",  # TODO: MUST NOT BE STATIC
+    )
 
     print()  # newline for neatness
 
