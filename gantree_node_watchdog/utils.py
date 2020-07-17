@@ -1,5 +1,6 @@
 """Various misc. utilities."""
 import requests
+import colorama
 
 from .conditions import is_exception
 
@@ -18,7 +19,9 @@ class printStatus:
         self,
         action: str,
         on_success: str = "OK",
-        on_fail: str = "FAIL",
+        on_fail: str = (
+            colorama.Fore.WHITE + colorama.Back.RED + "FAIL" + colorama.Style.RESET_ALL
+        ),
         suffix: str = "",
         fail_conditions=[],
     ):
