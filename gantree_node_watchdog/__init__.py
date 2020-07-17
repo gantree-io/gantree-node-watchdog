@@ -2,5 +2,5 @@
 
 from .script import main
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 __author__ = "Denver Pallis (DrTexx)"
