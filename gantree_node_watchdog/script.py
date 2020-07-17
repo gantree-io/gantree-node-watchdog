@@ -48,7 +48,7 @@ def main():
     if isinstance(registration, Exception):
         raise registration
     elif registration.status_code == 409:
-        raise RuntimeError("Node already registered.")
+        print("Node already registered.")
 
     print()  # newline for neatness
 
