@@ -74,16 +74,15 @@ def expect200(func):
     return wrapper_expect200
 
 
-def asciiSplash(art, fore, back):
+def asciiSplash(art, fore, back, banner=False):
     lines = art.split("\n")
     for line_n in range(len(lines)):
-        lines[line_n] = (
-            colorama.Fore.BLACK
-            + colorama.Back.LIGHTYELLOW_EX
-            + lines[line_n]
-            + colorama.Style.RESET_ALL
-        )
-    return "\n".join(lines)
+        lines[line_n] = fore + back + lines[line_n] + colorama.Style.RESET_ALL
+    return (
+        (colorama.Back.LIGHTYELLOW_EX if banner else "")
+        + "\n"
+        + colorama.Style.RESET_ALL
+    ).join(lines)
 
 
 # def print_response_json(
