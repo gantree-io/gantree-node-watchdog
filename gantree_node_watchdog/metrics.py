@@ -15,3 +15,11 @@ ACCESSIBLE_MESSAGE = (
     + colorama.Style.RESET_ALL
 )
 
+# TODO: note about not holding state
+class Metrics:
+    def __init__(self):
+        pass
+
+    def _get(self, hostname, timeout):
+        return requests.get(f"{hostname}/metrics", timeout=timeout)
+
