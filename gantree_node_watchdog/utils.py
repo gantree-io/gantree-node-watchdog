@@ -64,7 +64,7 @@ def expect200(func):
             return Expected200Error(
                 res,
                 f"Expected 200, got {res.status_code}: {res.reason}"
-                + "\nContent: {res.content.decode('utf-8')}",
+                + f"\nContent: {res.json()['message']}",
             )
 
     return wrapper_expect200
