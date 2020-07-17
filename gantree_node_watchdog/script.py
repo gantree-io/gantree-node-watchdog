@@ -13,8 +13,6 @@ from .utils import ascii_splash, Statistics
 
 colorama.init()
 
-config = Configuration(config_file="./.gwd_config.json")
-
 
 def main():
     """Execute with runner."""
@@ -26,6 +24,8 @@ def main():
     )
 
     stats = Statistics()
+
+    config = Configuration(config_file="./.gwd_config.json")
 
     print(config)
 
