@@ -34,6 +34,29 @@ class Configuration:
                             setattr(self, key, val)
                             self._key_origins[key] = "Configuration File"
 
+        longest_key = 0
+        longest_origin = 0
+
+        for key in self._key_origins:
+
+            len_key = len(key)
+            if len_key > longest_key:
+                longest_key = len_key
+
+            origin = self._key_origins[key]
+            if origin is not None:
+                len_origin = len(origin)
+                if len_origin > longest_origin:
+                    longest_origin = len_origin
+
+        print()
+        print(f"| {'OPTION':<{longest_key}} | {'ORIGIN':<{longest_origin}} |")
+        print(f"| {'-' * longest_key} | {'-' * longest_origin} |")
+        for key in self._key_origins:
+            origin = self._key_origins[key]
+            if origin is not None:
+                print(f"| {key:<{longest_key}} | {origin:<{longest_origin}} |")
+        print()
 
         os.getenv("GANTREE_NODE_WATCHDOG_PROXY_HOSTNAME")
 
