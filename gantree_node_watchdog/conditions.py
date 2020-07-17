@@ -1,3 +1,11 @@
+"""Collection of functions which return a boolean based on the properties of an item.
+
+In some cases, an exception may be returned instead.
+
+All functions should be usable in an iterable context.
+"""
+
+
 def is_exception(item):
     """Self-explanatory."""
     return True if isinstance(item, Exception) else False
