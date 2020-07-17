@@ -35,4 +35,13 @@ class Proxy:
             },
         )
 
+    @printStatus(SCRAPE_MESSAGE)
+    @expect200
+    def scrape(self, hostname, node_secret, ip_address):
+        return requests.get(
+            # f"{hostname}/clientNode/proxyScrape",
+            f"{hostname}/clientNode/proxyScrape",
+            headers={"Authorization": f"Node-Secret {node_secret}"},
+        )
+
 proxy = Proxy()
