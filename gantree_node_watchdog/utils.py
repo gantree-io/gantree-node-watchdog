@@ -92,6 +92,7 @@ class expect200:
                         if res.status_code == 404
                         else ""
                     )
+                    + f"\nURL: {res.url}"
                     + f"\nContent: '{res.content.decode('utf-8')}'",
                 )
 
