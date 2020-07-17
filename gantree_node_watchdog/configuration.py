@@ -84,9 +84,17 @@ class Configuration:
                     prompt_help_displayed = True
 
                 ro_input = input(f"{ro}: ")
-                # write to config
-                # apply to attribute
-                setattr(self, ro, ro_input)
+                if config_file is not None:
+
+                    with open(config_file, "r") as f:  # read current config
+                        data = json.load(f)
+
+                    data[ro] = ro_input  # add user inputted key
+
+                    with open(config_file, "w") as f:  # write modified config
+                        json.dump(data, f, indent=4)
+
+                setattr(self, ro, ro_input)  # apply to attribute
                 self._key_origins[ro] = "User Input"
 
         if prompt_help_displayed:
