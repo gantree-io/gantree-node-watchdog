@@ -1,4 +1,4 @@
-"""Operations related to getting local metrics."""
+"""Module for fetching metrics."""
 
 import requests
 import colorama
