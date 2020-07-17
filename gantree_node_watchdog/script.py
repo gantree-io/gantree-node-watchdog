@@ -58,8 +58,12 @@ def main():
                 node_secret=config.node_secret,
                 ip_address=config.ip_address,
             )
+            if isinstance(scrape, Exception):
+                raise scrape
 
             read_metrics = metrics.get(config.metrics_hostname)
+            if isinstance(read_metrics, Exception):
+                raise read_metrics
 
             proxy.metrics(
                 hostname=config.proxy_hostname,
