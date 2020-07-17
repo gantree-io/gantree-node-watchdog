@@ -22,5 +22,6 @@ def is_409(item):
     Return TypeError if item doesn't have a status_code.
     """
     if hasattr(item, "status_code"):
-        return True if item.status_code == 409 else False
+        return (True, "Conflict") if item.status_code == 409 else False
+
     return TypeError("is_409 cannot check item with missing status_code attribute")
