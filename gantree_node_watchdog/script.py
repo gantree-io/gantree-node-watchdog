@@ -67,6 +67,10 @@ def main():
 
             stats.success()
 
+        except KeyboardInterrupt:
+            print("\nExiting...")
+            break
+
         except Exception as e:
             print(f"Loop failed: {repr(e)}")
             stats.fail()
