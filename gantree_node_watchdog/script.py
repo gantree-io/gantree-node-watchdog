@@ -44,7 +44,7 @@ def main():
         api_key=config.api_key,
         project_id=config.project_id,
         ip_address=config.ip_address,
-        client_id="node1",  # TODO: MUST NOT BE STATIC
+        client_id=config.client_id,
     )
     if isinstance(registration, Exception):
         raise registration
