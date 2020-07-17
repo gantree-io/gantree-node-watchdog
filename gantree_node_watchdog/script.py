@@ -72,7 +72,8 @@ def main():
                 ip_address=config.ip_address,
             )
             if isinstance(scrape, Exception):
-                raise scrape
+                print(scrape)
+                raise RuntimeError(scrape)
 
             read_metrics = metrics.get(config.metrics_hostname)
             if isinstance(read_metrics, Exception):
