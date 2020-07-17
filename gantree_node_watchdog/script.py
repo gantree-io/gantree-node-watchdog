@@ -30,9 +30,11 @@ def main():
     print(config)
 
     metrics_accessible = metrics.accessible(config.metrics_hostname, timeout=10)
+
     if isinstance(metrics_accessible, Exception):
         print(metrics_accessible)
         raise RuntimeError(metrics_accessible)
+
     elif metrics_accessible is False:
         raise RuntimeError("Unable to get metrics from local machine. Exiting early.")
 
