@@ -6,14 +6,14 @@ import time
 import colorama
 
 from .art import gantree_art
-from .environment import get_env_vars
+from .configuration import Configuration
 from .metrics import metrics
 from .proxy import proxy
 from .utils import ascii_splash, Statistics
 
 colorama.init()
 
-env = get_env_vars()
+config = Configuration(config_file="./gwd_config.json")
 
 
 def main():
@@ -27,7 +27,7 @@ def main():
 
     stats = Statistics()
 
-    if metrics.accessible(env["metrics_hostname"], timeout=10) is False:
+    if metrics.accessible(config.metrics_hostname, timeout=10) is False:
         raise RuntimeError("Unable to get metrics from local machine. Exiting early.")
 
     # registration = proxy.register(
