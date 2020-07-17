@@ -23,7 +23,7 @@ class Proxy:
     def __init__(self):
         pass
 
-    @printStatus(REGISTER_MESSAGE, fail_conditions=[is_409])
+    @printStatus(REGISTER_MESSAGE, skip_conditions=[is_409])
     @expect200(allowlist=[409])
     def register(self, hostname, api_key, project_id, ip_address, client_id):
         return requests.post(
