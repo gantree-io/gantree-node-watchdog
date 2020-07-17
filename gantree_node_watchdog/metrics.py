@@ -34,7 +34,7 @@ class Metrics:
             return e
 
     @printStatus(GET_MESSAGE)
-    @expect200
+    @expect200()
     def get(self, hostname, timeout=5):
         """Get local metrics."""
         return self._get(hostname=hostname, timeout=timeout)

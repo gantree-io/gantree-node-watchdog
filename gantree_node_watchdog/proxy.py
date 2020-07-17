@@ -1,6 +1,7 @@
 import requests
 import colorama
 
+from .conditions import is_409
 from .utils import printStatus, expect200
 
 REGISTER_MESSAGE = (
@@ -22,8 +23,7 @@ class Proxy:
     def __init__(self):
         pass
 
-    @printStatus(REGISTER_MESSAGE)
-    @expect200
+    @expect200(allowlist=[409])
     def register(self, hostname, api_key, project_id, ip_address, client_id):
         return requests.post(
             f"{hostname}/clientNode/register",
@@ -36,7 +36,7 @@ class Proxy:
         )
 
     @printStatus(SCRAPE_MESSAGE)
-    @expect200
+    @expect200()
     def scrape(self, hostname, node_secret, ip_address):
         return requests.get(
             # f"{hostname}/clientNode/proxyScrape",
@@ -45,7 +45,7 @@ class Proxy:
         )
 
     @printStatus(METRICS_MESSAGE)
-    @expect200
+    @expect200()
     def metrics(self, hostname, node_secret, scrape_id, metrics_response):
         return requests.post(
             f"{hostname}/clientNode/proxyMetrics",
