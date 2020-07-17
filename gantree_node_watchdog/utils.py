@@ -78,8 +78,19 @@ class expect200:
             else:
                 return Expected200Error(
                     res,
-                    f"Expected 200, got {res.status_code}: {res.reason}"
-                    + f"\nContent: {res.content.decode('utf-8')}",
+                    "Expected 200"
+                    + (
+                        f"/{'/'.join([str(code) for code in self.allowlist])}"
+                        if self.allowlist
+                        else ""
+                    )
+                    + f" got {res.status_code}: {res.reason}"
+                    + (
+                        f"\nPerhaps your hostnames are misconfigured?"
+                        if res.status_code == 404
+                        else ""
+                    )
+                    + f"\nContent: '{res.content.decode('utf-8')}'",
                 )
 
         return wrapper_expect200
