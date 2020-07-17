@@ -7,6 +7,9 @@ import colorama
 
 from .art import gantree_art
 from .environment import get_env_vars
+from .metrics import metrics
+from .proxy import proxy
+from .utils import ascii_splash, Statistics
 
 env = get_env_vars()
 
