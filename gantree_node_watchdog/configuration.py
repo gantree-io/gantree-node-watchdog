@@ -12,6 +12,7 @@ class Configuration:
         self.node_id = None
         self.node_secret = None
         self._keys = [key for key in dir(self) if key[:1] != "_"]
+        self._key_origins = {key: None for key in self._keys}
 
         """Load any values from environment variables matching an attribute"""
 
@@ -20,9 +21,12 @@ class Configuration:
             with open(config_file, "r") as f:
                 data = json.load(f)
                 for key in self._keys:
-                    config_file_value = data.get(key)
-                    if config_file_value is not None:
-                        setattr(self, key, config_file_value)
+                    if getattr(self, key) is None:
+                        val = data.get(key)
+                        if val is not None:
+                            setattr(self, key, val)
+                            self._key_origins[key] = "Configuration File"
+
 
         os.getenv("GANTREE_NODE_WATCHDOG_PROXY_HOSTNAME")
 
