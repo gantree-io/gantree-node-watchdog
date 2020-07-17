@@ -22,4 +22,17 @@ class Proxy:
     def __init__(self):
         pass
 
+    @printStatus(REGISTER_MESSAGE)
+    @expect200
+    def register(self, hostname, api_key, project_id, ip_address, client_id):
+        return requests.post(
+            f"{hostname}/clientNode/register",
+            headers={"Authorization": f"Api-Key {api_key}"},
+            json={
+                "projectId": project_id,
+                "ipAddress": ip_address,
+                "clientId": client_id,
+            },
+        )
+
 proxy = Proxy()
