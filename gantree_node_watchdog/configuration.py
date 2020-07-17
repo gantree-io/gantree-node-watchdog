@@ -39,6 +39,9 @@ class Configuration:
                             setattr(self, key, val)
                             self._key_origins[key] = "Configuration File"
 
+    def __repr__(self):
+        """Represent the configuration as a table of options and origins."""
+        string = ""
         longest_key = 0
         longest_origin = 0
 
@@ -54,11 +57,11 @@ class Configuration:
                 if len_origin > longest_origin:
                     longest_origin = len_origin
 
-        print()
-        print(f"| {'OPTION':<{longest_key}} | {'ORIGIN':<{longest_origin}} |")
-        print(f"| {'-' * longest_key} | {'-' * longest_origin} |")
+        string += f"| {'OPTION':<{longest_key}} | {'ORIGIN':<{longest_origin}} |\n"
+        string += f"| {'-' * longest_key} | {'-' * longest_origin} |\n"
         for key in self._key_origins:
             origin = self._key_origins[key]
             if origin is not None:
-                print(f"| {key:<{longest_key}} | {origin:<{longest_origin}} |")
-        print()
+                string += f"| {key:<{longest_key}} | {origin:<{longest_origin}} |\n"
+
+        return string
