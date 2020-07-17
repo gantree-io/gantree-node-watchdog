@@ -1,4 +1,8 @@
 """Various misc. utilities."""
+import requests
+
+from .conditions import is_exception
+
 
 class Expected200Error(Exception):
     """Error thrown when expect200 doesn't get a 200."""
