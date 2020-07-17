@@ -69,7 +69,7 @@ def main():
             + " node_secret again after you initially register your node."
             + "\n"
         )
-        raise RuntimeError(
+        return RuntimeError(
             "Missing registration details for already registered client_id"
         )
 
