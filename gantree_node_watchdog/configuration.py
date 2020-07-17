@@ -2,6 +2,7 @@
 
 import os
 import json
+from typing import Dict, Union
 
 
 class Configuration:
@@ -17,7 +18,9 @@ class Configuration:
         self.node_id = None
         self.node_secret = None
         self._keys = [key for key in dir(self) if key[:1] != "_"]
-        self._key_origins = {key: None for key in self._keys}
+        self._key_origins: Dict[str, Union[None, str]] = {
+            key: None for key in self._keys
+        }
 
         """Load any values from environment variables matching an attribute"""
         for key in self._keys:
