@@ -49,7 +49,14 @@ def main():
     if isinstance(registration, Exception):
         raise registration
     elif registration.status_code == 409:
-        print("Node already registered.")
+        # print("Node already registered.")
+        pass
+    else:
+        reg_json = registration.json()
+        config._save_registration_details(
+            node_id=reg_json["nodeId"], node_secret=reg_json["nodeSecret"]
+        )
+
 
     print()  # newline for neatness
 
