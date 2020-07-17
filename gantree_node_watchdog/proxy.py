@@ -16,3 +16,10 @@ METRICS_MESSAGE = (
     + "Sending metrics to proxy... "
     + colorama.Style.RESET_ALL
 )
+
+
+class Proxy:
+    def __init__(self):
+        pass
+
+proxy = Proxy()
