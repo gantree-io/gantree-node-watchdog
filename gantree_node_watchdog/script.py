@@ -78,7 +78,7 @@ def main():
             )
 
             stats.success()
-            print()
+            print()  # newline for neatness
 
         except KeyboardInterrupt:
             print("\nExiting...")
