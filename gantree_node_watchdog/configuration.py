@@ -15,6 +15,13 @@ class Configuration:
         self._key_origins = {key: None for key in self._keys}
 
         """Load any values from environment variables matching an attribute"""
+        for key in self._keys:
+            if getattr(self, key) is None:
+                env_var = "GANTREE_NODE_WATCHDOG_" + key.upper()
+                val = os.getenv(env_var)
+                if val is not None:
+                    setattr(self, key, val)
+                    self._key_origins[key] = "Environment Variable"
 
         """Load any values in the configuration file matching an attribute"""
         if config_file is not None:
