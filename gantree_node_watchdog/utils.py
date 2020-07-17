@@ -68,3 +68,40 @@ def expect200(func):
             )
 
     return wrapper_expect200
+
+
+# def print_response_json(
+#     res: requests.Response, req_name: str, verbose: bool = False
+# ) -> None:
+#     """Print JSON from response, print error if returned instead."""
+#     if isinstance(res, Exception):
+#         print(f"{req_name} failed: {res}")
+#         raise res
+#     else:
+#         if verbose:
+#             res_str = ""
+#             res_str += f"{req_name} response: {res.status_code}\n"
+#             res_str += f"JSON: '{res.json()}'\n"
+#             print(res_str)
+
+
+# def print_response_content(
+#     res: requests.Response, req_name: str, max_chars: int = 0, verbose: bool = False
+# ) -> None:
+#     """Print content from response, print error if returned instead.
+
+#     If max_chars is 0, don't limit content chars.
+#     """
+#     if isinstance(res, Exception):
+#         print(f"{req_name} failed: {res}")
+#         raise res
+#     else:
+#         if verbose:
+#             content = res.content.decode("utf-8")
+#             max_msg = ""
+#             if max_chars > 0:
+#                 content = content[:max_chars]
+#                 max_msg = f" (first {max_chars} chars)"
+#             print(
+#                 f"{req_name} response{max_msg}: {res.status_code}\nContent: '{content}'\n"
+#             )
