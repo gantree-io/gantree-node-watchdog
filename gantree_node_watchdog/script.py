@@ -1,8 +1,9 @@
 """Binary entry point."""
 
-import requests
 import os
 import time
+
+import requests
 import colorama
 
 from .art import gantree_art
