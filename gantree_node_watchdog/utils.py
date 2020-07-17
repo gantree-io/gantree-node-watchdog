@@ -1,6 +1,7 @@
 """Various misc. utilities."""
 import requests
 import colorama
+import shutil
 
 from .conditions import is_exception
 
@@ -76,8 +77,14 @@ def expect200(func):
 
 def asciiSplash(art, fore, back, banner=False):
     lines = art.split("\n")
+    t_columns, _t_lines = shutil.get_terminal_size((80, 20))
     for line_n in range(len(lines)):
-        lines[line_n] = fore + back + lines[line_n] + colorama.Style.RESET_ALL
+        lines[line_n] = (
+            fore
+            + back
+            + (f"{lines[line_n]:^{t_columns}}" if banner else lines[line_n])
+            + colorama.Style.RESET_ALL
+        )
     return (
         (colorama.Back.LIGHTYELLOW_EX if banner else "")
         + "\n"
