@@ -17,7 +17,13 @@ ACCESSIBLE_MESSAGE = (
 
 # TODO: note about not holding state
 class Metrics:
+    """Abstraction of metrics server.
+    
+    Class Should not hold any state.
+    """
+
     def __init__(self):
+        """See class docstring."""
         pass
 
     def _get(self, hostname, timeout):
