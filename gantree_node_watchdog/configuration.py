@@ -59,7 +59,10 @@ class Configuration:
                             self._key_origins[key] = "Configuration File"
 
         """Load default values."""
-        # TODO: configuration defaults
+        for dk in self._defaults:
+            if getattr(self, dk) is None:
+                setattr(self, dk, self._defaults[dk])
+                self._key_origins[dk] = "Defaults"
 
         """Prompt for missing values."""
         if self.proxy_hostname is None:
