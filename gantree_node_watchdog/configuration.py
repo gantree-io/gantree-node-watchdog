@@ -63,11 +63,21 @@ class Configuration:
                 if len_origin > longest_origin:
                     longest_origin = len_origin
 
-        string += f"| {'OPTION':<{longest_key}} | {'ORIGIN':<{longest_origin}} |\n"
-        string += f"| {'-' * longest_key} | {'-' * longest_origin} |\n"
+            value = getattr(self, key)
+            if value is not None:
+                len_value = len(value)
+                if len_value > longest_value:
+                    longest_value = len_value
+
+        string += f"| {'OPTION':<{longest_key}} | {'ORIGIN':<{longest_origin}} | {'VALUE':<{longest_value}} |\n"
+        string += f"| {'-' * longest_key} | {'-' * longest_origin} | {'-' * longest_value} |\n"
         for key in self._key_origins:
             origin = self._key_origins[key]
+            value = getattr(self, key)
             if origin is not None:
-                string += f"| {key:<{longest_key}} | {origin:<{longest_origin}} |\n"
+                if self._censor_values:
+                    string += f"| {key:<{longest_key}} | {origin:<{longest_origin}} | {value[:2] + '#' * (len(value)-4) + value[-2:]:<{longest_value}} |\n"
+                else:
+                    string += f"| {key:<{longest_key}} | {origin:<{longest_origin}} | {value:<{longest_value}} |\n"
 
         return string
