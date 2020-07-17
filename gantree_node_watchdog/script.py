@@ -87,3 +87,4 @@ def main():
         except Exception as e:
             print(f"Loop failed: {repr(e)}")
             stats.fail()
+            # raise e
