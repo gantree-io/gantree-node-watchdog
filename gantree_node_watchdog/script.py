@@ -16,36 +16,57 @@ colorama.init()
 env = get_env_vars()
 
 
-def register(hostname, api_key, project_id, ip_address):
-    return requests.post(
-        f"{hostname}/clientNode/register",
-        headers={"Authorization": f"Api-Key {api_key}"},
-        json={"projectId": project_id, "ipAddress": ip_address},
-    )
-
-
-def proxy_scrape(hostname, node_secret, ip_address):
-    return requests.get(
-        f"{hostname}/clientNode/proxyScrape",
-        headers={"Authorization": f"Node-Secret {node_secret}"},
-    )
-
-
-def get_metrics(hostname):
-    return requests.get(f"{hostname}/metrics")
-
-
 def main():
-    print("Hello, World!\n")
-
-    scrape = proxy_scrape(
-        hostname=env["hostname"],
-        node_secret=env["node_secret"],
-        ip_address=env["ip_address"],
-    ).json()
-    print(f"Proxy scrape response:\n{scrape}\n")
-
-    metrics = get_metrics("http://127.0.0.1:9615").content
+    """Execute with runner."""
     print(
-        f"Metrics response (first 200 characters):\n{metrics.decode('utf-8')[:200]}...\n"
+        ascii_splash(
+            gantree_art, colorama.Fore.BLACK, colorama.Back.LIGHTYELLOW_EX, banner=True
+        )
+        + "\n"
     )
+
+    stats = Statistics()
+
+    if metrics.accessible(env["metrics_hostname"], timeout=10) is False:
+        raise RuntimeError("Unable to get metrics from local machine. Exiting early.")
+
+    # registration = proxy.register(
+    #     hostname=env["proxy_hostname"],
+    #     api_key=env["api_key"],
+    #     project_id=env["project_id"],
+    #     ip_address=env["ip_address"],
+    #     client_id="node1",  # TODO: MUST NOT BE STATIC
+    # )
+    # if isinstance(registration, Exception):
+    #     raise registration
+
+    print()  # newline for neatness
+
+    while True:
+        try:
+            stats.print_oneline()
+
+            # print(
+            # )
+            # t1 = time.time()
+            scrape = proxy.scrape(
+                hostname=env["proxy_hostname"],
+                node_secret=env["node_secret"],
+                ip_address=env["ip_address"],
+            )
+            # t2 = time.time()
+
+            read_metrics = metrics.get(env["metrics_hostname"])
+
+            proxy.metrics(
+                hostname=env["proxy_hostname"],
+                node_secret=env["node_secret"],
+                scrape_id=scrape.json()["scrapeId"],
+                metrics_response=read_metrics.content.decode("utf-8"),
+            )
+
+            stats.success()
+
+        except Exception as e:
+            print(f"Loop failed: {repr(e)}")
+            stats.fail()
