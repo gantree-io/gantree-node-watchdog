@@ -70,15 +70,19 @@ class Configuration:
     def __repr__(self):
         """Represent the configuration as a table of options and origins."""
         string = ""
-        longest_key = 0
-        longest_origin = 0
-        longest_value = 0
+        option_header = "OPTION"
+        origin_header = "ORIGIN"
+        value_header = "VALUE"
+
+        longest_option = len(option_header)
+        longest_origin = len(origin_header)
+        longest_value = len(value_header)
 
         for key in self._key_origins:
 
             len_key = len(key)
-            if len_key > longest_key:
-                longest_key = len_key
+            if len_key > longest_option:
+                longest_option = len_key
 
             origin = self._key_origins[key]
             if origin is not None:
@@ -93,15 +97,17 @@ class Configuration:
                     longest_value = len_value
 
         # TODO: cut off table if it exceeds term columns (or alternative)
-        string += f"| {'OPTION':<{longest_key}} | {'ORIGIN':<{longest_origin}} | {'VALUE':<{longest_value}} |\n"
-        string += f"| {'-' * longest_key} | {'-' * longest_origin} | {'-' * longest_value} |\n"
+        string += f"| {option_header:<{longest_option}} | {origin_header:<{longest_origin}} | {value_header:<{longest_value}} |\n"
+        string += f"| {'-' * longest_option} | {'-' * longest_origin} | {'-' * longest_value} |\n"
         for key in self._key_origins:
             origin = self._key_origins[key]
+            origin = "?" if origin is None else origin
             value = getattr(self, key)
+            value = "None" if value is None else value
             if origin is not None:
                 if self._censor_values:
-                    string += f"| {key:<{longest_key}} | {origin:<{longest_origin}} | {value[:2] + '#' * (len(value)-4) + value[-2:]:<{longest_value}} |\n"
+                    string += f"| {key:<{longest_option}} | {origin:<{longest_origin}} | {value[:2] + '#' * (len(value)-4) + value[-2:]:<{longest_value}} |\n"
                 else:
-                    string += f"| {key:<{longest_key}} | {origin:<{longest_origin}} | {value:<{longest_value}} |\n"
+                    string += f"| {key:<{longest_option}} | {origin:<{longest_origin}} | {value:<{longest_value}} |\n"
 
         return string
