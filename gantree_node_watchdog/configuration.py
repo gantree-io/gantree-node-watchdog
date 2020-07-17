@@ -67,10 +67,14 @@ class Configuration:
                 self._key_origins[dk] = "Defaults"
 
         """Prompt for missing values."""
-        if self.proxy_hostname is None:
-            # write to config
-            # apply to attribute
-            self.proxy_hostname = input("Proxy hostname: ")
+        for ro in self._required_options:
+            if getattr(self, ro) is None:
+
+                ro_input = input(f"{ro}: ")
+                # write to config
+                # apply to attribute
+                setattr(self, ro, ro_input)
+                self._key_origins[ro] = "User Input"
 
     def __repr__(self):
         """Represent the configuration as a table of options and origins."""
