@@ -1,0 +1,40 @@
+import os
+import json
+
+
+class Configuration:
+    def __init__(self, config_file=None):
+        self.proxy_hostname = None
+        self.metrics_hostname = None
+        self.api_key = None
+        self.project_id = None
+        self.ip_address = None
+        self.node_id = None
+        self.node_secret = None
+        self._keys = [key for key in dir(self) if key[:1] != "_"]
+
+        """Load any values from environment variables matching an attribute"""
+
+        """Load any values in the configuration file matching an attribute"""
+        if config_file is not None:
+            with open(config_file, "r") as f:
+                data = json.load(f)
+                for key in self._keys:
+                    config_file_value = data.get(key)
+                    if config_file_value is not None:
+                        setattr(self, key, config_file_value)
+
+        os.getenv("GANTREE_NODE_WATCHDOG_PROXY_HOSTNAME")
+
+
+def get_env_vars():
+    """Fetch required environment variables."""
+    return {
+        # "proxy_hostname": ,
+        "metrics_hostname": os.getenv("GANTREE_NODE_WATCHDOG_METRICS_HOSTNAME"),
+        "api_key": os.getenv("GANTREE_NODE_WATCHDOG_API_KEY"),
+        "project_id": os.getenv("GANTREE_NODE_WATCHDOG_PROJECT_ID"),
+        "ip_address": os.getenv("GANTREE_NODE_WATCHDOG_IP_ADDRESS"),
+        "node_id": os.getenv("GANTREE_NODE_WATCHDOG_NODE_ID"),
+        "node_secret": os.getenv("GANTREE_NODE_WATCHDOG_NODE_SECRET"),
+    }
