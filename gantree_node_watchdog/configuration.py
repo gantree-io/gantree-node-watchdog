@@ -50,7 +50,7 @@ class Configuration:
         if config_file is not None:
             if not Path(config_file).is_file():
                 with open(config_file, "w") as f:
-                    json.dump({}, f)
+                    json.dump({}, f, indent=4)
             with open(config_file, "r") as f:
                 data = json.load(f)
                 for key in self._keys:
