@@ -15,6 +15,7 @@ class Configuration:
         self.metrics_hostname = None
         self.api_key = None
         self.project_id = None
+        self.client_id = None
         self.ip_address = None
         self.node_id = None
         self.node_secret = None
