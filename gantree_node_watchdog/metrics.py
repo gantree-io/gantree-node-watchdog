@@ -29,4 +29,17 @@ class Metrics:
         """Get local metrics."""
         return self._get(hostname=hostname, timeout=timeout)
 
+    @printStatus(ACCESSIBLE_MESSAGE, fail_conditions=[is_false])
+    def accessible(self, hostname, timeout):
+        """Return True if local metrics can be fetched."""
+        metrics = self._get(hostname=hostname, timeout=timeout)
+
+        if isinstance(metrics, Exception):
+            return False
+
+        is_accessible = metrics.ok and len(metrics.content.decode("utf-8")) > 0
+
+        return True if is_accessible else False
+
+
 metrics = Metrics()
