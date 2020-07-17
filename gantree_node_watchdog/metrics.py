@@ -27,7 +27,10 @@ class Metrics:
         pass
 
     def _get(self, hostname, timeout):
-        return requests.get(f"{hostname}/metrics", timeout=timeout)
+        try:
+            return requests.get(f"{hostname}/metrics", timeout=timeout)
+        except Exception as e:
+            return e
 
     @printStatus(GET_MESSAGE)
     @expect200
@@ -36,12 +39,12 @@ class Metrics:
         return self._get(hostname=hostname, timeout=timeout)
 
     @printStatus(ACCESSIBLE_MESSAGE, fail_conditions=[is_false])
-    def accessible(self, hostname, timeout):
+    def accessible(self, hostname, timeout) -> Union[bool, Exception]:
         """Return True if local metrics can be fetched."""
         metrics = self._get(hostname=hostname, timeout=timeout)
 
         if isinstance(metrics, Exception):
-            return False
+            return metrics
 
         is_accessible = metrics.ok and len(metrics.content.decode("utf-8")) > 0
 
