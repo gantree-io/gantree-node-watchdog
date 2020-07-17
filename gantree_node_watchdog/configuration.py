@@ -1,3 +1,5 @@
+"""Management of configuration."""
+
 import os
 import json
 
@@ -6,6 +8,7 @@ class Configuration:
     """Stores configuration options sourced from various origins."""
 
     def __init__(self, config_file=None):
+        """See class docstring."""
         self.proxy_hostname = None
         self.metrics_hostname = None
         self.api_key = None
