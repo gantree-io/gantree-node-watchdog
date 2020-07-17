@@ -67,14 +67,30 @@ class Configuration:
                 self._key_origins[dk] = "Defaults"
 
         """Prompt for missing values."""
+        prompt_help_displayed = False
         for ro in self._required_options:
             if getattr(self, ro) is None:
+
+                if not prompt_help_displayed:
+                    print(
+                        "⮞ One or more required options couldn't be"
+                        + " found in your configuration file or environment variables."
+                        + "\n⮞ You'll be prompted for any values we need right now."
+                        + "\n⮞ Any information you enter will be stored in your configuration"
+                        + f" file ('{self._config_file}') and will be loaded when the"
+                        + " program is next executed."
+                        + "\n"
+                    )
+                    prompt_help_displayed = True
 
                 ro_input = input(f"{ro}: ")
                 # write to config
                 # apply to attribute
                 setattr(self, ro, ro_input)
                 self._key_origins[ro] = "User Input"
+
+        if prompt_help_displayed:
+            print()  # newline for neatness
 
     def __repr__(self):
         """Represent the configuration as a table of options and origins."""
