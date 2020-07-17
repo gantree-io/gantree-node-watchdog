@@ -5,6 +5,17 @@ import json
 from pathlib import Path
 from typing import Dict, Union
 
+import colorama
+
+from .conditions import is_false
+from .utils import printStatus
+
+HAS_REG_DETAILS_MESSAGE = (
+    colorama.Fore.LIGHTBLUE_EX
+    + "Checking registration details... "
+    + colorama.Style.RESET_ALL
+)
+
 
 class Configuration:
     """Stores configuration options sourced from various origins."""
@@ -84,21 +95,38 @@ class Configuration:
                     prompt_help_displayed = True
 
                 ro_input = input(f"{ro}: ")
-                if config_file is not None:
 
-                    with open(config_file, "r") as f:  # read current config
-                        data = json.load(f)
+                self._write_option_to_config(ro, ro_input)
 
-                    data[ro] = ro_input  # add user inputted key
-
-                    with open(config_file, "w") as f:  # write modified config
-                        json.dump(data, f, indent=4)
-
-                setattr(self, ro, ro_input)  # apply to attribute
                 self._key_origins[ro] = "User Input"
 
         if prompt_help_displayed:
             print()  # newline for neatness
+
+    def _write_option_to_config(self, option, value, apply_now: bool = True):
+        if self._config_file is not None:
+
+            with open(self._config_file, "r") as f:  # read current config
+                data = json.load(f)
+
+            data[option] = value  # add user inputted key
+
+            with open(self._config_file, "w") as f:  # write modified config
+                json.dump(data, f, indent=4)
+
+        if apply_now:
+            setattr(self, option, value)  # apply to attribute
+
+    def _save_registration_details(self, node_id, node_secret):
+        self._write_option_to_config("node_id", node_id)
+        self._write_option_to_config("node_secret", node_secret)
+
+    @printStatus(HAS_REG_DETAILS_MESSAGE, fail_conditions=[is_false])
+    def _has_registration_details(self):
+        if self.node_id and self.node_secret:
+            return True
+        else:
+            return False
 
     def __repr__(self):
         """Represent the configuration as a table of options and origins."""
