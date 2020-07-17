@@ -92,6 +92,36 @@ def ascii_splash(art, fore, back, banner=False):
     ).join(lines)
 
 
+class Statistics:
+    def __init__(self):
+        self.successes = 0
+        self.failures = 0
+
+    def success(self):
+        self.successes += 1
+
+    def fail(self):
+        self.failures += 1
+
+    def print_oneline(self):
+        c_default = colorama.Fore.LIGHTBLACK_EX
+        c_success = colorama.Fore.GREEN
+        c_fail = colorama.Fore.RED
+        print(
+            c_default
+            + "[ STATUS ] ---- [ Proxied Requests: "
+            + c_success
+            + str(self.successes)
+            + c_default
+            + " ] ---- [ Failures: "
+            + c_fail
+            + str(self.failures)
+            + c_default
+            + " ]"
+            + colorama.Style.RESET_ALL
+        )
+
+
 # def print_response_json(
 #     res: requests.Response, req_name: str, verbose: bool = False
 # ) -> None:
