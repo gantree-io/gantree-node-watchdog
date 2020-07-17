@@ -2,6 +2,7 @@
 
 import requests
 import colorama
+from typing import Union
 
 from .utils import printStatus, expect200
 from .conditions import is_false
