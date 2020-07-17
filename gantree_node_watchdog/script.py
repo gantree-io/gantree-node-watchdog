@@ -27,6 +27,8 @@ def main():
 
     stats = Statistics()
 
+    print(config)
+
     if metrics.accessible(config.metrics_hostname, timeout=10) is False:
         raise RuntimeError("Unable to get metrics from local machine. Exiting early.")
 
