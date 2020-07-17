@@ -31,6 +31,8 @@ class Configuration:
             key: None for key in self._keys
         }
 
+        self._config_file = config_file
+
         if not isinstance(censor_values, bool):
             raise TypeError("censor_values must be bool")
         self._censor_values = censor_values
