@@ -2,7 +2,10 @@
 
 import requests
 import os
+import time
+import colorama
 
+from .art import gantree_art
 from .environment import get_env_vars
 
 env = get_env_vars()
