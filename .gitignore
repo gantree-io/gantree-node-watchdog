@@ -1,5 +1,6 @@
 # Sensitive data
 /setup_env_vars.sh
+/.gwd_config.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
