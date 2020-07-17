@@ -46,15 +46,12 @@ def main():
         try:
             stats.print_oneline()
 
-            # print(
-            # )
-            # t1 = time.time()
+            # TODO: create timer decorator for this method
             scrape = proxy.scrape(
                 hostname=env["proxy_hostname"],
                 node_secret=env["node_secret"],
                 ip_address=env["ip_address"],
             )
-            # t2 = time.time()
 
             read_metrics = metrics.get(env["metrics_hostname"])
 
