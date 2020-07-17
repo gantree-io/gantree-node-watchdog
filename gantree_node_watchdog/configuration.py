@@ -36,6 +36,9 @@ class Configuration:
 
         """Load any values in the configuration file matching an attribute."""
         if config_file is not None:
+            if not Path(config_file).is_file():
+                with open(config_file, "w") as f:
+                    json.dump({}, f)
             with open(config_file, "r") as f:
                 data = json.load(f)
                 for key in self._keys:
