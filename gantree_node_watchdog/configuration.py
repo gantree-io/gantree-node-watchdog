@@ -19,10 +19,18 @@ class Configuration:
         self.ip_address = None
         self.node_id = None
         self.node_secret = None
+
+        self._defaults = {
+            "proxy_hostname": "https://api.gantree.io",
+            "metrics_hostname": "http://127.0.0.1:9615",
+        }
+        self._required_options = ["api_key", "project_id", "client_id", "ip_address"]
+
         self._keys = [key for key in dir(self) if key[:1] != "_"]
         self._key_origins: Dict[str, Union[None, str]] = {
             key: None for key in self._keys
         }
+
         if not isinstance(censor_values, bool):
             raise TypeError("censor_values must be bool")
         self._censor_values = censor_values
