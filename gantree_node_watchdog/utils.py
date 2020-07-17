@@ -12,6 +12,43 @@ class Expected200Error(Exception):
         super().__init__(*args, **kwargs)
         self.res = res
 
+
+class printStatus:
+    def __init__(
+        self,
+        action: str,
+        on_success: str = "OK",
+        on_fail: str = "FAIL",
+        suffix: str = "",
+        fail_conditions=[],
+    ):
+        self.action = action
+        self.on_success = on_success
+        self.on_fail = on_fail
+        self.suffix = suffix
+        self.fail_conditions = [is_exception, *fail_conditions]
+
+    def __call__(self, func):
+        def wrapper_printStatus(*args, **kwargs):
+            print(self.action, end="", flush=True)
+
+            res = func(*args, **kwargs)
+
+            for fc in self.fail_conditions:
+                failed = fc(res)
+                if isinstance(failed, bool):
+                    if failed is True:
+                        print(self.on_fail + self.suffix)
+                        return res
+                else:
+                    print("CRIT (Invalid value returned from fail condition function)")
+
+            print(self.on_success + self.suffix)
+            return res
+
+        return wrapper_printStatus
+
+
 def expect200(func):
     """Return runtime error if response status code isn't 200."""
 
