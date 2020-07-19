@@ -15,7 +15,7 @@
 
 # Gantree Node Watchdog
 
-***This repo may be made public, please treat it was such***
+***This repo may be made public, please treat it as such***
 
 - Ensure you **do not** commit sensitive information
 
