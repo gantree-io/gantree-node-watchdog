@@ -2,6 +2,8 @@
 
 import os
 import time
+import threading
+from queue import Queue
 
 import requests
 import colorama
@@ -13,6 +15,100 @@ from .proxy import proxy
 from .utils import ascii_splash, Statistics
 
 colorama.init()
+
+# further reading/reference:
+# https://timber.io/blog/multiprocessing-vs-multithreading-in-python-what-you-need-to-know/
+def scrape_loop(stats, config):
+    l_scrape = (
+        threading.Lock()
+    )  # if necessary, would want one lock per metric server we wish to scrape from
+
+    # function to process items in the queue
+    def f_scrape(scrape):
+        with l_scrape:
+            print("polling for a scrape request...")
+            t1 = time.time()
+            scrape = (
+                scrape()
+            )  # reassign function variable as value return from function
+            # (probably not the right way to go about it, probably assign result
+            # to something else in a thread-safe way)
+            t2 = time.time()
+            print(f"received scrape request! ({(t2 - t1)*1000:.2f}ms)")
+
+    # wrap scrape method so it's callable later
+    def r_poll_for_scrape():
+        """Return a function we can call later to poll the proxy for a scrape request."""
+
+        def func():
+            return proxy.scrape(
+                hostname=config.proxy_hostname,
+                node_secret=config.node_secret,
+                ip_address=config.ip_address,
+            )
+
+        return func
+
+    # the function running on each thread
+    def threader(index):
+        """Run this function in each thread we create."""
+        while True:  # until thread killed
+            print(f"[{index}]: getting a task")
+            f_scrape(q.get())  # get a function from the queue and execute it
+            q.task_done()  # mark the task in the queue complete
+            print(f"[{index}]: task completed")
+
+    q = Queue()
+
+    # create x many threads
+    for n in range(5):
+        t = threading.Thread(target=threader, args=(n,))
+        t.daemon = True
+        t.start()
+
+    # queue x many jobs
+    for _job in range(10):
+        q.put(r_poll_for_scrape())
+        print("put a r_scrape in queue")
+
+    q.join()
+    exit()
+
+    while True:
+        try:
+            stats.print_oneline()
+            print()
+
+            t_scrape = threading.Thread(target=f_scrape, args=(config))
+            print("Waiting for a scrape")
+            t_scrape.join()
+            print("Finished scraping")
+            if isinstance(scrape, Exception):
+                print(scrape)
+                raise RuntimeError(scrape)
+
+            read_metrics = metrics.get(config.metrics_hostname)
+            if isinstance(read_metrics, Exception):
+                raise read_metrics
+
+            proxy.metrics(
+                hostname=config.proxy_hostname,
+                node_secret=config.node_secret,
+                scrape_id=scrape.json()["scrapeId"],
+                metrics_response=read_metrics.content.decode("utf-8"),
+            )
+
+            stats.success()
+            print()  # newline for neatness
+
+        except KeyboardInterrupt:
+            print("\nExiting...")
+            break
+
+        except Exception as e:
+            print(f"Loop failed: {repr(e)}")
+            stats.fail()
+            # raise e
 
 
 def main():
@@ -75,40 +171,4 @@ def main():
 
     print()  # newline for neatness
 
-    while True:
-        try:
-            stats.print_oneline()
-            print()
-
-            # TODO: create timer decorator for this method
-            scrape = proxy.scrape(
-                hostname=config.proxy_hostname,
-                node_secret=config.node_secret,
-                ip_address=config.ip_address,
-            )
-            if isinstance(scrape, Exception):
-                print(scrape)
-                raise RuntimeError(scrape)
-
-            read_metrics = metrics.get(config.metrics_hostname)
-            if isinstance(read_metrics, Exception):
-                raise read_metrics
-
-            proxy.metrics(
-                hostname=config.proxy_hostname,
-                node_secret=config.node_secret,
-                scrape_id=scrape.json()["scrapeId"],
-                metrics_response=read_metrics.content.decode("utf-8"),
-            )
-
-            stats.success()
-            print()  # newline for neatness
-
-        except KeyboardInterrupt:
-            print("\nExiting...")
-            break
-
-        except Exception as e:
-            print(f"Loop failed: {repr(e)}")
-            stats.fail()
-            # raise e
+    scrape_loop(stats, config)
