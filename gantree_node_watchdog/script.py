@@ -73,6 +73,22 @@ def main():
             "Missing registration details for already registered client_id"
         )
 
+    while True:
+        proxy_status = proxy.status(
+            hostname=config.proxy_hostname, node_secret=config.node_secret
+        )
+
+        if isinstance(proxy_status, Exception):
+            raise proxy_status
+
+        else:
+            dashboard_status = proxy_status.json()["status"]["telemDashboard"]
+
+            if dashboard_status == "READY":
+                break
+
+            time.sleep(10)
+
     print()  # newline for neatness
 
     while True:
