@@ -23,9 +23,22 @@
 
 - [Gantree Node Watchdog](#gantree-node-watchdog)
   - [Table of Contents](#table-of-contents)
+  - [Notes](#notes)
+    - [Ipify Service](#ipify-service)
+  - [Installation](#installation)
   - [Building](#building)
     - [Requirements](#requirements)
     - [Steps](#steps)
+
+## Notes
+
+### Ipify Service
+
+Gantree Node Watchdog uses ipify to get your machine's public ip address automatically.
+
+Although we have a legitimate use-case for the ipify service, some malicious actors use the same service for command-and-control botnets.
+
+Any potential warnings related to gnw contacting `api.ipify.org` are false-positives and, if required, are safe to add to your firewall's allow list.
 
 ## Installation
 
