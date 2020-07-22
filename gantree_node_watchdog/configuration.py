@@ -32,7 +32,7 @@ class Configuration:
         self.node_secret = None
 
         self._defaults = {
-            "proxy_hostname": "https://api.gantree.io",
+            "proxy_hostname": "https://prometheus.gantree.io",
             "metrics_hostname": "http://127.0.0.1:9615",
         }
         self._required_options = ["api_key", "project_id", "client_id", "ip_address"]
