@@ -14,6 +14,7 @@ pydocstyle = "*"
 [packages]
 requests = "*"
 colorama = "*"
+ipify = {git = "https://github.com/gantree-io/python-ipify"}
 
 [requires]
 python_version = "3.8"
