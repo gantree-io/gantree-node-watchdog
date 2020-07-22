@@ -39,11 +39,11 @@ Stand-alone binaries can be found in [releases](https://github.com/gantree-io/ga
 
 ![GitHub Pipenv locked Python version](https://img.shields.io/github/pipenv/locked/python-version/gantree-io/gantree-node-watchdog)
 
-| Package | Version | Notes                                         |
-| ------- | ------- | --------------------------------------------- |
-| pipenv  | *latest*  | -                                             |
-| pyenv   | *latest*  | only if required python version not installed |
-| make    | *latest*  | -                                             |
+| Package | Version  | Notes                                         |
+| ------- | -------- | --------------------------------------------- |
+| pipenv  | *latest* | -                                             |
+| pyenv   | *latest* | only if required python version not installed |
+| make    | *latest* | -                                             |
 
 
 ### Steps
