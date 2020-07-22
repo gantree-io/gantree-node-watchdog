@@ -8,5 +8,5 @@ if version_info.major < 3:
 
 from .script import main
 
-__version__ = "0.1.1"
+__version__ = "0.1.2"
 __author__ = "Denver Pallis (DrTexx)"
