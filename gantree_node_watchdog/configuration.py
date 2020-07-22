@@ -85,7 +85,7 @@ class Configuration:
                         # print(f"Getting '{dk}' from {dv.__name__}()...")
                         # default_executions_ran = True
                         setattr(self, dk, dv())
-                        self._key_origins[dk] = "Defaults (Executable)"
+                        self._key_origins[dk] = "Defaults (Executed)"
                     except Exception as e:
                         raise RuntimeError(f"Failed to execute callable default: {e}")
         if default_executions_ran:
