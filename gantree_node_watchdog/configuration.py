@@ -3,12 +3,12 @@
 import os
 import json
 from pathlib import Path
-from typing import Dict, Union
+from typing import Dict, Union, Callable
 
 import colorama
 
 from .conditions import is_false
-from .utils import printStatus
+from .utils import printStatus, get_public_ip_addr
 
 HAS_REG_DETAILS_MESSAGE = (
     colorama.Fore.LIGHTBLUE_EX
@@ -34,6 +34,7 @@ class Configuration:
         self._defaults = {
             "proxy_hostname": "https://prometheus.gantree.io",
             "metrics_hostname": "http://127.0.0.1:9615",
+            "ip_address": get_public_ip_addr,
         }
         self._required_options = ["api_key", "project_id", "client_id", "ip_address"]
 
@@ -72,10 +73,23 @@ class Configuration:
                             self._key_origins[key] = "Configuration File"
 
         """Load default values."""
+        default_executions_ran = False
         for dk in self._defaults:
             if getattr(self, dk) is None:
-                setattr(self, dk, self._defaults[dk])
-                self._key_origins[dk] = "Defaults"
+                dv: Union[str, Callable] = self._defaults[dk]
+                if isinstance(dv, str):
+                    setattr(self, dk, dv)
+                    self._key_origins[dk] = "Defaults"
+                else:
+                    try:
+                        # print(f"Getting '{dk}' from {dv.__name__}()...")
+                        # default_executions_ran = True
+                        setattr(self, dk, dv())
+                        self._key_origins[dk] = "Defaults (Executable)"
+                    except Exception as e:
+                        raise RuntimeError(f"Failed to execute callable default: {e}")
+        if default_executions_ran:
+            print()  # newline for neatness
 
         """Prompt for missing values."""
         prompt_help_displayed = False

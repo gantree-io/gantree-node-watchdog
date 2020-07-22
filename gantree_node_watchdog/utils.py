@@ -4,8 +4,34 @@ import colorama
 import shutil
 from typing import List, Callable
 
+from ipify import get_ip
+from ipify.exceptions import ConnectionError, ServiceError
+
 from .conditions import is_exception
 from .exceptions import Expected200Error
+
+
+def get_public_ip_addr():
+    """Return the public IP address of machine executing script."""
+    try:
+        return get_ip()
+    except ConnectionError:
+        print(
+            "Warning: Unable to reach the ipify service."
+            + " This is likely due to a network error and not the ipify service."
+            + "\nWe'll try getting your public IP address from somewhere else."
+        )
+    except ServiceError:
+        print(
+            "Warning: Ipify service is experiencing issues."
+            + "\nWe'll try getting your public IP address from somewhere else."
+        )
+    except Exception as e:
+        print(
+            "Warning: Failed to public IP address from ipify for unknown reasons."
+            + f"\nError received: {e}"
+            + "\nWe'll try getting your public IP address from somewhere else."
+        )
 
 
 # TODO: add coloured OK's
