@@ -1,11 +1,16 @@
 import requests
 import colorama
 
-from .conditions import is_409
+from .conditions import is_409, dash_not_ready
 from .utils import printStatus, expect200
 
 REGISTER_MESSAGE = (
     colorama.Fore.LIGHTBLUE_EX + "Registering node... " + colorama.Style.RESET_ALL
+)
+STATUS_MESSAGE = (
+    colorama.Fore.LIGHTBLUE_EX
+    + "Waiting for telemetry dashboard... "
+    + colorama.Style.RESET_ALL
 )
 SCRAPE_MESSAGE = (
     colorama.Fore.LIGHTYELLOW_EX
@@ -34,6 +39,14 @@ class Proxy:
                 "ipAddress": ip_address,
                 "clientId": client_id,
             },
+        )
+
+    @printStatus(STATUS_MESSAGE, skip_conditions=[dash_not_ready])
+    @expect200()
+    def status(self, hostname, node_secret):
+        return requests.get(
+            f"{hostname}/clientNode/status",
+            headers={"Authorization": f"Node-Secret {node_secret}"},
         )
 
     @printStatus(SCRAPE_MESSAGE)
