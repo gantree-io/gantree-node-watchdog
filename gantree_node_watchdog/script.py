@@ -26,7 +26,7 @@ def main():
 
     stats = Statistics()
 
-    config = Configuration(config_file="./.gwd_config.json")
+    config = Configuration(config_file="./.gnw_config.json")
 
     print(config)
 
