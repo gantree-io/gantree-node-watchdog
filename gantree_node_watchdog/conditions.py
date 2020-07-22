@@ -49,4 +49,4 @@ def dash_not_ready(item):
     if item_json["status"]["telemDashboard"] == "READY":
         return False
     else:
-        return True
+        return (True, f"Status = {item_json['status']['telemDashboard']}")
