@@ -5,11 +5,11 @@ from .conditions import is_409
 from .utils import printStatus, expect200
 
 REGISTER_MESSAGE = (
-    colorama.Fore.LIGHTBLUE_EX + f"Registering node... " + colorama.Style.RESET_ALL
+    colorama.Fore.LIGHTBLUE_EX + "Registering node... " + colorama.Style.RESET_ALL
 )
 SCRAPE_MESSAGE = (
     colorama.Fore.LIGHTYELLOW_EX
-    + f"Waiting for a scrape request from the proxy... "
+    + "Waiting for a scrape request from the proxy... "
     + colorama.Style.RESET_ALL
 )
 METRICS_MESSAGE = (
