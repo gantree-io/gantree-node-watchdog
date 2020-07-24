@@ -4,14 +4,34 @@ from .. import internal_error_message
 
 
 OPTIONS: dict = {
-    "proxy_hostname": {"description": "PLACEHOLDER"},
-    "metrics_hostname": {"description": "PLACEHOLDER"},
-    "api_key": {"description": "PLACEHOLDER"},
-    "project_id": {"description": "PLACEHOLDER"},
-    "client_id": {"description": "PLACEHOLDER"},
-    "ip_address": {"description": "PLACEHOLDER"},
-    "node_id": {"description": "PLACEHOLDER"},
-    "node_secret": {"description": "PLACEHOLDER"},
+    "proxy_hostname": {
+        "description": "PLACEHOLDER",
+        "default": "PLACEHOLDER",
+        "promptable": False,
+    },
+    "metrics_hostname": {
+        "description": "PLACEHOLDER",
+        "default": "PLACEHOLDER",
+        "promptable": False,
+    },
+    "api_key": {"description": "PLACEHOLDER", "default": None, "promptable": True},
+    "project_id": {"description": "PLACEHOLDER", "default": None, "promptable": True},
+    "client_id": {
+        "description": "Name of this node",
+        "default": None,
+        "promptable": True,
+    },
+    "ip_address": {
+        "description": "Public IP address for this node",
+        "default": "PLACEHOLDER",
+        "promptable": False,
+    },
+    "node_id": {
+        "description": "Server ID for this node",
+        "default": None,
+        "promptable": False,
+    },
+    "node_secret": {"description": "PLACEHOLDER", "default": None, "promptable": False},
 }
 
 
