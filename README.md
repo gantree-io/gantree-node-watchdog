@@ -15,9 +15,7 @@
 
 # Gantree Node Watchdog
 
-***This repo will be made public, please treat it as such***
-
-- Ensure you **do not** commit sensitive information
+Instance monitoring client for Gantree
 
 ## Table of Contents
 
