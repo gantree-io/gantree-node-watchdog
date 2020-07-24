@@ -7,12 +7,17 @@ from typing import Dict, Union, Callable
 
 import colorama
 
-from .conditions import is_false
+from .conditions import is_false, is_client_id_valid
 from .utils import printStatus, get_public_ip_addr
 
 HAS_REG_DETAILS_MESSAGE = (
     colorama.Fore.LIGHTBLUE_EX
     + "Checking registration details... "
+    + colorama.Style.RESET_ALL
+)
+VALIDATION_MESSAGE = (
+    colorama.Fore.LIGHTBLUE_EX
+    + "Validating configuration... "
     + colorama.Style.RESET_ALL
 )
 
@@ -37,6 +42,7 @@ class Configuration:
             "ip_address": get_public_ip_addr,
         }
         self._required_options = ["api_key", "project_id", "client_id", "ip_address"]
+        self._checks = {"client_id": [is_client_id_valid]}
 
         self._keys = [key for key in dir(self) if key[:1] != "_"]
         self._key_origins: Dict[str, Union[None, str]] = {
@@ -116,6 +122,53 @@ class Configuration:
 
         if prompt_help_displayed:
             print()  # newline for neatness
+
+        valid = self._validate()
+        if isinstance(valid, Exception):
+            print(valid)
+            exit()
+        elif valid is False:
+            print("WIP: config failed to validate, no error supplied.")
+        print()  # newline for neatness
+
+    @printStatus(VALIDATION_MESSAGE)
+    def _validate(self):
+        invalid_values = []
+        for ck in self._checks:
+            if getattr(self, ck) is not None:
+                for check in self._checks[ck]:
+                    result = check(getattr(self, ck))
+
+                    if isinstance(result, tuple):
+                        result, result_msg = result
+
+                    if isinstance(result, bool):
+                        if not result:
+                            return ValueError(
+                                f"{ck} failed to validate"
+                                + (
+                                    f": {result_msg}"
+                                    if result_msg
+                                    else ": please check documentation for valid values"
+                                )
+                            )
+                            # TODO: collect all failed checks and print at once instead of one at a time
+                            # invalid_values.append({ck: result_msg})
+
+                    else:
+                        raise RuntimeError(
+                            "A config check did not return a boolean or valid tuple"
+                        )
+
+        return True if len(invalid_values) == 0 else False
+
+        # for i in range(len(invalid_values)):
+        #     failed_checks = invalid_values[i]
+        #     for invalid_value in failed_checks:
+        #         print(invalid_value)
+        #     # for key in failed_checks[failed]:
+        #     #     print(f"{key} invalid - {failed_checks[failed]}")
+        # exit()
 
     def _write_option_to_config(self, option, value, apply_now: bool = True):
         if self._config_file is not None:
