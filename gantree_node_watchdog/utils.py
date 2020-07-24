@@ -2,6 +2,8 @@
 import requests
 import colorama
 import shutil
+import json
+from pathlib import Path
 from typing import List, Callable
 
 from ipify import get_ip
@@ -181,3 +183,13 @@ class Statistics:
             + " ]"
             + colorama.Style.RESET_ALL
         )
+
+
+def read_json(filepath):
+    """Read a json file, return (not raise) an exception if it doesn't exist."""
+    print(Path(filepath))
+    if not Path(filepath).exists():
+        return FileNotFoundError(f"couldn't find file '{filepath}'")
+
+    with open(filepath, "r") as f:
+        return json.load(f)
