@@ -24,6 +24,7 @@ Instance monitoring client for Gantree
   - [Notes](#notes)
     - [Ipify Service](#ipify-service)
   - [Installation](#installation)
+    - [Quick Install](#quick-install)
   - [Building](#building)
     - [Requirements](#requirements)
     - [Steps](#steps)
@@ -39,6 +40,13 @@ Although we have a legitimate use-case for the ipify service, some malicious act
 Any potential warnings related to gnw contacting `api.ipify.org` are false-positives and, if required, are safe to add to your firewall's allow list.
 
 ## Installation
+
+### Quick Install
+
+```bash
+curl -o- https://raw.githubusercontent.com/gantree-io/gantree-node-watchdog/master/quick-install.sh | bash
+cd gantree-node-watchdog-v*.*.*-linux && ./bin/gantree_node_watchdog
+```
 
 Stand-alone binaries can be found in [releases](https://github.com/gantree-io/gantree-node-watchdog/releases).
 
