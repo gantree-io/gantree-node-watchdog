@@ -7,6 +7,7 @@ from typing import Dict, Union, Callable
 
 import colorama
 
+from . import internal_error_message
 from .conditions import is_false, is_client_id_valid
 from .utils import printStatus, get_public_ip_addr
 
@@ -20,6 +21,16 @@ VALIDATION_MESSAGE = (
     + "Validating configuration... "
     + colorama.Style.RESET_ALL
 )
+OPTION_META = {
+    "proxy_hostname": {"description": "PLACEHOLDER"},
+    "metrics_hostname": {"description": "PLACEHOLDER"},
+    "api_key": {"description": "PLACEHOLDER"},
+    "project_id": {"description": "PLACEHOLDER"},
+    "client_id": {"description": "PLACEHOLDER"},
+    "ip_address": {"description": "PLACEHOLDER"},
+    "node_id": {"description": "PLACEHOLDER"},
+    "node_secret": {"description": "PLACEHOLDER"},
+}
 
 
 class Configuration:
@@ -113,6 +124,16 @@ class Configuration:
                         + "\n"
                     )
                     prompt_help_displayed = True
+
+                if ro not in OPTION_META:
+                    raise Exception(
+                        f"Option '{ro}' is missing metadata. " + internal_error_message
+                    )
+                if "description" not in OPTION_META[ro]:
+                    raise Exception(
+                        f"Option '{ro}' is missing a description. "
+                        + internal_error_message
+                    )
 
                 ro_input = input(f"{ro}: ")
 
