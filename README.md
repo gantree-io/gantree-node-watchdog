@@ -1,8 +1,6 @@
 <p align="center">
     <a alt="License">
         <img alt="GitHub" src="https://img.shields.io/github/license/gantree-io/gantree-node-watchdog"></a>
-    <a alt="Vulnerabilities">
-        <img alt="Snyk Vulnerabilities for GitHub Repo" src="https://img.shields.io/snyk/vulnerabilities/github/gantree-io/gantree-node-watchdog"></a>
     <a href="https://discord.gg/BsWVddN" alt="Discord">
         <img alt="Discord" src="https://img.shields.io/discord/719451945345220658?logo=Discord"></a>
     <a href="https://gantree.io" alt="Website">
