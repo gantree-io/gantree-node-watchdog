@@ -10,3 +10,6 @@ from .script import main
 
 __version__ = "0.2.0"
 __author__ = "Denver Pallis (DrTexx)"
+__company__ = "Gantree"
+__repository__ = "https://github.com/gantree-io/gantree-node-watchdog"
+__bug_tracker__ = __repository__ + "/issues"
