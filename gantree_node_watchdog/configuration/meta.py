@@ -2,7 +2,15 @@
 
 from .. import internal_error_message
 
+"""Information on option dict:
 
+[description] - Description of the option, should be short.
+
+[default] - Default value for an option.
+
+[promptable] - Whether users should be prompted to fill in this option.
+             - Holds no bearing as to if values can be overwritten by other methods.
+"""
 OPTIONS: dict = {
     "proxy_hostname": {
         "description": "PLACEHOLDER",
