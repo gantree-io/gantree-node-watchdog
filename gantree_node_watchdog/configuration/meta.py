@@ -16,7 +16,10 @@ OPTIONS: dict = {
 
 
 def get_desc(option_name):
-    """Get an option's description."""
+    """Get an option's description.
+    
+    This function exists so descriptions are always fetched in the exact same way.
+    """
     if option_name not in OPTIONS:
         raise Exception(
             f"Option '{option_name}' is missing metadata. " + internal_error_message
