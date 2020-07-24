@@ -37,12 +37,15 @@ class Configuration:
         self.node_id = None
         self.node_secret = None
 
+        # TODO: move into options meta
         self._defaults = {
             "proxy_hostname": "https://prometheus.gantree.io",
             "metrics_hostname": "http://127.0.0.1:9615",
             "ip_address": get_public_ip_addr,
         }
+        # TODO: move into options meta
         self._required_options = ["api_key", "project_id", "client_id", "ip_address"]
+        # TODO: move into options meta
         self._checks = {"client_id": [is_client_id_valid]}
 
         self._keys = [key for key in dir(self) if key[:1] != "_"]
