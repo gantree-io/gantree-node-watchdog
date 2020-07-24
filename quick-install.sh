@@ -12,6 +12,6 @@ curl -s https://api.github.com/repos/gantree-io/gantree-node-watchdog/releases/l
 echo "Unpacking..."
 tar -xf ./gantree-node-watchdog-v*.*.*-linux.tar.gz
 
-# execute
-echo "Executing..."
-cd gantree-node-watchdog-v*.*.*-linux && ./bin/gantree_node_watchdog
+# # execute
+# echo "Executing..."
+# cd gantree-node-watchdog-v*.*.*-linux && ./bin/gantree_node_watchdog
