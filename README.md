@@ -43,10 +43,13 @@ Any potential warnings related to gnw contacting `api.ipify.org` are false-posit
 
 ### Quick Install
 
-```bash
-curl -o- https://raw.githubusercontent.com/gantree-io/gantree-node-watchdog/master/quick-install.sh | bash
-cd gantree-node-watchdog-v*.*.*-linux && ./bin/gantree_node_watchdog
-```
+Install
+
+`curl -o- https://raw.githubusercontent.com/gantree-io/gantree-node-watchdog/master/quick-install.sh | bash`
+
+Start
+
+`cd gantree-node-watchdog-v*.*.*-linux && ./bin/gantree_node_watchdog`
 
 Stand-alone binaries can be found in [releases](https://github.com/gantree-io/gantree-node-watchdog/releases).
 
