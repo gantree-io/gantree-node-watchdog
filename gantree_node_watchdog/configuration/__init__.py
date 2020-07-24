@@ -7,10 +7,9 @@ from typing import Dict, Union, Callable
 
 import colorama
 
-from .. import internal_error_message
 from ..conditions import is_false, is_client_id_valid
 from ..utils import printStatus, get_public_ip_addr, read_json
-from .meta import OPTIONS as OPTIONS_META
+from . import meta
 
 HAS_REG_DETAILS_MESSAGE = (
     colorama.Fore.LIGHTBLUE_EX
@@ -116,17 +115,7 @@ class Configuration:
                     )
                     prompt_help_displayed = True
 
-                if ro not in OPTIONS_META:
-                    raise Exception(
-                        f"Option '{ro}' is missing metadata. " + internal_error_message
-                    )
-                if "description" not in OPTIONS_META[ro]:
-                    raise Exception(
-                        f"Option '{ro}' is missing a description. "
-                        + internal_error_message
-                    )
-
-                ro_input = input(f"{ro}: ")
+                ro_input = input(f"{meta.get_desc(ro)} ({ro}): ")
 
                 self._write_option_to_config(ro, ro_input)
 

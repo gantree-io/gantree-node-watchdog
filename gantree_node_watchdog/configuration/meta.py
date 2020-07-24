@@ -1,5 +1,8 @@
 """Configuration metadata."""
 
+from .. import internal_error_message
+
+
 OPTIONS: dict = {
     "proxy_hostname": {"description": "PLACEHOLDER"},
     "metrics_hostname": {"description": "PLACEHOLDER"},
@@ -10,3 +13,19 @@ OPTIONS: dict = {
     "node_id": {"description": "PLACEHOLDER"},
     "node_secret": {"description": "PLACEHOLDER"},
 }
+
+
+def get_desc(option_name):
+    """Get an option's description."""
+    if option_name not in OPTIONS:
+        raise Exception(
+            f"Option '{option_name}' is missing metadata. " + internal_error_message
+        )
+
+    if "description" not in OPTIONS[option_name]:
+        raise Exception(
+            f"Option '{option_name}' is missing a description. "
+            + internal_error_message
+        )
+
+    return OPTIONS[option_name]["description"]
