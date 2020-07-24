@@ -4,6 +4,7 @@ In some cases, an exception may be returned instead.
 
 All functions should be usable in an iterable context.
 """
+import re
 
 
 def is_exception(item):
@@ -50,3 +51,12 @@ def dash_not_ready(item):
         return False
     else:
         return (True, f"Status = {item_json['status']['telemDashboard']}")
+
+
+def is_client_id_valid(client_id):
+    exp = r"^[a-z\-0-9]{0,32}$"
+    m = re.match(exp, client_id, re.IGNORECASE)
+    if m:
+        return True
+    else:
+        return (False, f"client_id must match this regex: {exp}")
