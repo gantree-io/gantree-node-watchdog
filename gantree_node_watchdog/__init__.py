@@ -6,7 +6,7 @@ if version_info.major < 3:
     print("Error: Unsupported Python version. Please use Python 3 or above.")
     exit()
 
-__version__ = "0.2.0"
+__version__ = "0.2.1"
 __author__ = "Denver Pallis (DrTexx)"
 __company__ = "Gantree"
 __repository__ = "https://github.com/gantree-io/gantree-node-watchdog"
