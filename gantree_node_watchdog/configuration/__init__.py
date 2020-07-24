@@ -123,7 +123,6 @@ class Configuration:
                     + f"{meta.get_desc(ro)}: "
                     + colorama.Style.RESET_ALL
                 )
-                print()
 
                 self._write_option_to_config(ro, ro_input)
 
