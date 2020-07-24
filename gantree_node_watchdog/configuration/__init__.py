@@ -7,9 +7,9 @@ from typing import Dict, Union, Callable
 
 import colorama
 
-from . import internal_error_message
-from .conditions import is_false, is_client_id_valid
-from .utils import printStatus, get_public_ip_addr
+from .. import internal_error_message
+from ..conditions import is_false, is_client_id_valid
+from ..utils import printStatus, get_public_ip_addr, read_json
 
 HAS_REG_DETAILS_MESSAGE = (
     colorama.Fore.LIGHTBLUE_EX
