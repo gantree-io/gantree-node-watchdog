@@ -22,8 +22,16 @@ OPTIONS: dict = {
         "default": "PLACEHOLDER",
         "promptable": False,
     },
-    "api_key": {"description": "PLACEHOLDER", "default": None, "promptable": True},
-    "project_id": {"description": "PLACEHOLDER", "default": None, "promptable": True},
+    "api_key": {
+        "description": "API key from the Gantree web app",
+        "default": None,
+        "promptable": True,
+    },
+    "project_id": {
+        "description": "Name of network to register this node on",
+        "default": None,
+        "promptable": True,
+    },
     "client_id": {
         "description": "Name of this node",
         "default": None,
