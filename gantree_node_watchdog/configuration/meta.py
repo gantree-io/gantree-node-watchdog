@@ -28,7 +28,7 @@ OPTIONS: dict = {
         "promptable": True,
     },
     "project_id": {
-        "description": "Name of network to register this node on",
+        "description": "Name of substrate network",
         "default": None,
         "promptable": True,
     },
