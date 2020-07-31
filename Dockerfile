@@ -1,5 +1,4 @@
 
-# Base alpine image with node and npm preinstalled
 FROM python:3
 
 # Add docker-compose-wait tool
