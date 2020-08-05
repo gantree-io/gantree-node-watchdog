@@ -55,7 +55,7 @@ def dash_not_ready(item):
 
 def is_client_id_valid(client_id):
     exp = r"^[a-z\-0-9]{0,32}$"
-    m = re.match(exp, client_id, re.IGNORECASE)
+    m = re.match(exp, client_id)
     if m:
         return True
     else:
