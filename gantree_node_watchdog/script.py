@@ -74,20 +74,29 @@ def main():
         )
 
     while True:
-        proxy_status = proxy.status(
-            hostname=config.proxy_hostname, node_secret=config.node_secret
-        )
+        try:
+            proxy_status = proxy.status(
+                hostname=config.proxy_hostname, node_secret=config.node_secret
+            )
 
-        if isinstance(proxy_status, Exception):
-            raise proxy_status
+            if isinstance(proxy_status, Exception):
+                raise proxy_status
 
-        else:
-            dashboard_status = proxy_status.json()["status"]["telemDashboard"]
+            else:
+                dashboard_status = proxy_status.json()["status"]["telemDashboard"]
 
-            if dashboard_status == "READY":
-                break
+                if dashboard_status == "READY":
+                    break
 
-            time.sleep(10)
+                time.sleep(10)
+
+        except KeyboardInterrupt:
+            print("\nCancelling...")
+            break
+
+        except Exception as e:
+            print(f"ERROR: {repr(e)}")
+            time.sleep(0.1)
 
     print()  # newline for neatness
 
