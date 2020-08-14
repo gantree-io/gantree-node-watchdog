@@ -15,18 +15,6 @@
 
 Instance monitoring client for Gantree
 
-## Table of Contents
-
-- [Gantree Node Watchdog](#gantree-node-watchdog)
-  - [Installation](#installation)
-    - [Quick Start](#quick-start)
-    - [Releases](#releases)
-  - [Building](#building)
-    - [Requirements](#requirements)
-    - [Steps](#steps)
-  - [Notes](#notes)
-    - [Ipify Service](#ipify-service)
-
 ## Installation
 
 ### Quick Start
