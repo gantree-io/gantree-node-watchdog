@@ -15,29 +15,6 @@
 
 Instance monitoring client for Gantree
 
-## Table of Contents
-
-- [Gantree Node Watchdog](#gantree-node-watchdog)
-  - [Table of Contents](#table-of-contents)
-  - [Notes](#notes)
-    - [Ipify Service](#ipify-service)
-  - [Installation](#installation)
-    - [Quick Start](#quick-start)
-    - [Releases](#releases)
-  - [Building](#building)
-    - [Requirements](#requirements)
-    - [Steps](#steps)
-
-## Notes
-
-### Ipify Service
-
-Gantree Node Watchdog uses ipify to get your machine's public ip address automatically.
-
-Although we have a legitimate use-case for the ipify service, some malicious actors use the same service for command-and-control botnets.
-
-Any potential warnings related to gnw contacting `api.ipify.org` are false-positives and, if required, are safe to add to your firewall's allow list.
-
 ## Installation
 
 ### Quick Start
@@ -75,3 +52,13 @@ pipenv install --dev # if prompted to install python version, accept
 pipenv shell
 make
 ```
+
+## Notes
+
+### Ipify Service
+
+Gantree Node Watchdog uses ipify to get your machine's public ip address automatically.
+
+Although we have a legitimate use-case for the ipify service, some malicious actors use the same service for command-and-control botnets.
+
+Any potential warnings related to gnw contacting `api.ipify.org` are false-positives and, if required, are safe to add to your firewall's allow list.
