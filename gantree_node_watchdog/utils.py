@@ -64,14 +64,29 @@ class printStatus:
 
             res = func(*args, **kwargs)
 
+            # TODO: address redundant code between fail/skip condition checking loops
             for fc in self.fail_conditions:
                 failed = fc(res)
+                failed_reason = None
+
+                if isinstance(failed, tuple):
+                    """If the fail condition returns a tuple, unpack it."""
+                    if len(failed) == 2:
+                        failed, failed_reason = failed
+
                 if isinstance(failed, bool):
                     if failed is True:
-                        print(self.on_fail + self.suffix)
+                        print(
+                            self.on_fail
+                            + (f" ({failed_reason})" if failed_reason else "")
+                            + self.suffix
+                        )
                         return res
                 else:
-                    return TypeError("Fail condition didn't return a bool")
+                    if isinstance(failed, Exception):
+                        return failed
+                    else:
+                        return TypeError("Fail condition didn't return a bool")
 
             for sc in self.skip_conditions:
                 skip = sc(res)
