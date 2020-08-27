@@ -91,7 +91,10 @@ class printStatus:
                         )
                         return res
                 else:
-                    return TypeError("Skip condition didn't return a bool")
+                    if isinstance(skip, Exception):
+                        return skip
+                    else:
+                        return TypeError("Skip condition didn't return a bool")
 
             print(self.on_success + self.suffix)
             return res
