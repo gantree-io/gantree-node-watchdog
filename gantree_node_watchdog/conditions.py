@@ -31,12 +31,21 @@ def is_409(item):
 def dash_not_ready(item):
     """Return True if the item doesn't contains a telemDashboard status other than ready.
 
-    Return ValueErro
+    Return ValueError if item doesn't return the expected data shape.
+
+    Return RuntimeError if item's .json() method raises an error.
     """
     if not hasattr(item, "json"):
         return ValueError("dash_not_ready cannot check item without a json method")
 
-    item_json = item.json()
+    item_json = None
+    try:
+        item_json = item.json()
+    except Exception as e:
+        return RuntimeError(
+            f"dash_not_ready encountered an error while running the item's .json() method:\n{e.__repr__()}"
+        )
+
     if not ("status" in item_json):
         return ValueError(
             "dash_not_ready cannot check item without a status key in content"
