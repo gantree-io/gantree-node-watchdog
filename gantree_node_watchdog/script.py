@@ -48,8 +48,8 @@ def main():
     )
     if isinstance(registration, Exception):
         raise registration
-    elif registration.status_code == 409:
-        # print("Node already registered.")
+    elif registration.status_code == 409:  # Conflict
+        # Node has already been registered
         pass
     else:
         reg_json = registration.json()
