@@ -8,6 +8,7 @@ import colorama
 
 from .art import gantree_art
 from .configuration import Configuration
+from .messages import node_secret_rejected
 from .metrics import metrics
 from .proxy import proxy
 from .utils import ascii_splash, Statistics
@@ -82,6 +83,9 @@ def main():
             if isinstance(proxy_status, Exception):
                 raise proxy_status
 
+            elif proxy_status.status_code == 403:  # Forbidden
+                break
+
             else:
                 dashboard_status = proxy_status.json()["status"]["telemDashboard"]
 
@@ -114,6 +118,9 @@ def main():
             if isinstance(scrape, Exception):
                 print(scrape)
                 raise RuntimeError(scrape)
+            elif scrape.status_code == 403:
+                print(node_secret_rejected(config))
+                break
 
             read_metrics = metrics.get(config.metrics_hostname)
             if isinstance(read_metrics, Exception):
