@@ -96,7 +96,7 @@ def main():
 
         except Exception as e:
             print(f"ERROR: {repr(e)}")
-            time.sleep(0.1)
+            time.sleep(10)
 
     print()  # newline for neatness
 
@@ -136,5 +136,5 @@ def main():
         except Exception as e:
             print(f"Loop failed: {repr(e)}")
             stats.fail()
-            time.sleep(0.1)
+            time.sleep(1)
             # raise e
