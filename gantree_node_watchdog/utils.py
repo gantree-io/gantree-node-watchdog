@@ -1,11 +1,13 @@
 """Various misc. utilities."""
-import requests
-import colorama
+import os
+import sys
 import shutil
 import json
 from pathlib import Path
 from typing import List, Callable
 
+import requests
+import colorama
 from ipify import get_ip
 from ipify.exceptions import ConnectionError, ServiceError
 
@@ -211,3 +213,12 @@ def read_json(filepath):
 
     with open(filepath, "r") as f:
         return json.load(f)
+
+
+def is_terminal_interactive():
+    """Check if the active terminal is interactive."""
+    isatty = os.isatty(sys.stdout.fileno())
+    if isinstance(isatty, bool):
+        return isatty
+    else:
+        return RuntimeError("Expected returned value to be a boolean.")
