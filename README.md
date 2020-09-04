@@ -70,6 +70,56 @@ To stop GNW
 - Ensure the terminal running GNW is focused
 - Press `Ctrl+C`
 
+## Systemd
+
+### Installation
+
+Create the file `gnw.service` under `/etc/systemd/user/` with the following contents:
+
+```s
+# Contents of /etc/systemd/user/myservice.service
+
+[Unit]
+Description=Gantree Node Watchdog
+After=network.target
+
+[Service]
+Type=simple
+Restart=always
+ExecStart=/usr/local/bin/gantree_node_watchdog
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Now copy the `gantree_node_watchdog` binary to `/usr/local/bin/`
+
+```bash
+cp [/path/to/gnw/binary] /usr/local/bin
+```
+
+Finally configure all required options by either exporting the associated environment variables or specifying values in `~/.gnw_config.json`.
+
+### Usage
+
+To start GNW
+
+```bash
+systemctl --user start gnw
+```
+
+To view logs
+
+```bash
+journalctl --user -f -u gnw
+```
+
+To stop GNW
+
+```bash
+systemctl --user stop gnw
+```
+
 ## Development
 
 Run the following from the root directory of the cloned repository (`gantree-node-watchdog`) to automatically restart GNW when changes occur in watched folders.
