@@ -61,4 +61,4 @@ Gantree Node Watchdog uses ipify to get your machine's public ip address automat
 
 Although we have a legitimate use-case for the ipify service, some malicious actors use the same service for command-and-control botnets.
 
-Any potential warnings related to gnw contacting `api.ipify.org` are false-positives and, if required, are safe to add to your firewall's allow list.
+Any potential warnings related to GNW contacting `api.ipify.org` are false-positives and, if required, are safe to add to your firewall's allow list.
