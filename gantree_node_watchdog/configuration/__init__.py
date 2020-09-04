@@ -8,7 +8,7 @@ from typing import Dict, Union, Callable
 import colorama
 
 from ..conditions import is_false, is_client_id_valid
-from ..utils import printStatus, get_public_ip_addr, read_json
+from ..utils import printStatus, get_public_ip_addr, read_json, is_terminal_interactive
 from . import meta
 
 HAS_REG_DETAILS_MESSAGE = (
@@ -103,6 +103,7 @@ class Configuration:
 
         """Prompt for missing values."""
         prompt_help_displayed = False
+        is_interactive = is_terminal_interactive()
         for ro in self._required_options:
             if getattr(self, ro) is None:
 
@@ -118,11 +119,16 @@ class Configuration:
                     )
                     prompt_help_displayed = True
 
-                ro_input = input(
-                    colorama.Fore.LIGHTBLUE_EX
-                    + f"{meta.get_desc(ro)}: "
-                    + colorama.Style.RESET_ALL
-                )
+                if is_interactive == True:
+                    ro_input = input(
+                        colorama.Fore.LIGHTBLUE_EX
+                        + f"{meta.get_desc(ro)}: "
+                        + colorama.Style.RESET_ALL
+                    )
+                else:
+                    raise RuntimeError(
+                        "Cannot accept input for options requiring configuration in non-interactive terminal"
+                    )
 
                 self._write_option_to_config(ro, ro_input)
 
