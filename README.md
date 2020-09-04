@@ -77,7 +77,7 @@ To stop GNW
 Create the file `gnw.service` under `/etc/systemd/user/` with the following contents:
 
 ```s
-# Contents of /etc/systemd/user/myservice.service
+# Contents of /etc/systemd/user/gnw.service
 
 [Unit]
 Description=Gantree Node Watchdog
