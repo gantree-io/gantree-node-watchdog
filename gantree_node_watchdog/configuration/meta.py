@@ -14,7 +14,7 @@ from .. import internal_error_message
 OPTIONS: dict = {
     "proxy_hostname": {
         "description": "PLACEHOLDER",  # TODO: add description
-        "default": "PLACEHOLDER",  # TODO: add default
+        "default": "https://api.gantree.io",
         "promptable": False,
     },
     "metrics_hostname": {

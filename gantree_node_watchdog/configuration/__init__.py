@@ -40,7 +40,7 @@ class Configuration:
 
         # TODO: move into options meta
         self._defaults = {
-            "proxy_hostname": "https://prometheus.gantree.io",
+            "proxy_hostname": "https://api.gantree.io",
             "metrics_hostname": "http://127.0.0.1:9615",
             "ip_address": get_public_ip_addr,
             "prompt_missing": True,
