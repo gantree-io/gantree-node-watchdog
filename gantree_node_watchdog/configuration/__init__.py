@@ -137,7 +137,7 @@ class Configuration:
         if prompt_help_displayed:
             print()  # newline for neatness
 
-        # TODO: give users a change to update invalid options with prompt, also say the options origin (e.g. config)
+        # TODO: give users a chance to update invalid options with prompt, also say the options origin (e.g. config)
         valid = self._validate()
         if isinstance(valid, Exception):
             print(valid)
