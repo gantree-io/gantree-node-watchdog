@@ -55,9 +55,7 @@ If you would prefer to raise an exception instead, this behaviour can be disable
 
 Any prompted values will be stored in the configuration file.
 
-## Usage
-
-### Simple
+## Simple Usage
 
 To start GNW, run the following in your terminal
 
