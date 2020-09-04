@@ -13,13 +13,13 @@ from .. import internal_error_message
 """
 OPTIONS: dict = {
     "proxy_hostname": {
-        "description": "PLACEHOLDER",
-        "default": "PLACEHOLDER",
+        "description": "PLACEHOLDER",  # TODO: add description
+        "default": "PLACEHOLDER",  # TODO: add default
         "promptable": False,
     },
     "metrics_hostname": {
-        "description": "PLACEHOLDER",
-        "default": "PLACEHOLDER",
+        "description": "PLACEHOLDER",  # TODO: add description
+        "default": "PLACEHOLDER",  # TODO: add default
         "promptable": False,
     },
     "api_key": {
