@@ -21,3 +21,6 @@ python_version = "3.8"
 
 [pipenv]
 allow_prereleases = true
+
+[scripts]
+dev = "pm2 start process.json"
