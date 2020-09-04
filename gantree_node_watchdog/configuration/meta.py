@@ -39,7 +39,7 @@ OPTIONS: dict = {
     },
     "ip_address": {
         "description": "Public IP address for this node",
-        "default": "PLACEHOLDER",
+        "default": None,
         "promptable": False,
     },
     "node_id": {
