@@ -36,12 +36,14 @@ class Configuration:
         self.ip_address = None
         self.node_id = None
         self.node_secret = None
+        self.prompt_missing = None
 
         # TODO: move into options meta
         self._defaults = {
             "proxy_hostname": "https://prometheus.gantree.io",
             "metrics_hostname": "http://127.0.0.1:9615",
             "ip_address": get_public_ip_addr,
+            "prompt_missing": True,
         }
         # TODO: move into options meta
         self._required_options = ["api_key", "project_id", "client_id", "ip_address"]
@@ -101,41 +103,47 @@ class Configuration:
         if default_executions_ran:
             print()  # newline for neatness
 
-        """Prompt for missing values."""
-        prompt_help_displayed = False
-        is_interactive = is_terminal_interactive()
-        for ro in self._required_options:
-            if getattr(self, ro) is None:
+        if self.prompt_missing:
+            """Prompt for missing values."""
+            prompt_help_displayed = False
+            is_interactive = is_terminal_interactive()
+            for ro in self._required_options:
+                if getattr(self, ro) is None:
 
-                if not prompt_help_displayed:
-                    print(
-                        "⮞ One or more required options couldn't be"
-                        + " found in your configuration file or environment variables."
-                        + "\n⮞ You'll be prompted for any values we need right now."
-                        + "\n⮞ Any information you enter will be stored in your configuration"
-                        + f" file ('{self._config_file}') and will be loaded when the"
-                        + " program is next executed."
-                        + "\n"
-                    )
-                    prompt_help_displayed = True
+                    if not prompt_help_displayed:
+                        print(
+                            "⮞ One or more required options couldn't be"
+                            + " found in your configuration file or environment variables."
+                            + "\n⮞ You'll be prompted for any values we need right now."
+                            + "\n⮞ Any information you enter will be stored in your configuration"
+                            + f" file ('{self._config_file}') and will be loaded when the"
+                            + " program is next executed."
+                            + "\n"
+                        )
+                        prompt_help_displayed = True
 
-                if is_interactive == True:
-                    ro_input = input(
-                        colorama.Fore.LIGHTBLUE_EX
-                        + f"{meta.get_desc(ro)}: "
-                        + colorama.Style.RESET_ALL
-                    )
-                else:
-                    raise RuntimeError(
-                        "Cannot accept input for options requiring configuration in non-interactive terminal"
-                    )
+                    if is_interactive == True:
+                        ro_input = input(
+                            colorama.Fore.LIGHTBLUE_EX
+                            + f"{meta.get_desc(ro)}: "
+                            + colorama.Style.RESET_ALL
+                        )
+                    else:
+                        raise RuntimeError(
+                            "Cannot accept input for options requiring configuration in non-interactive terminal"
+                        )
 
-                self._write_option_to_config(ro, ro_input)
+                    self._write_option_to_config(ro, ro_input)
 
-                self._key_origins[ro] = "User Input"
+                    self._key_origins[ro] = "User Input"
 
-        if prompt_help_displayed:
-            print()  # newline for neatness
+            if prompt_help_displayed:
+                print()  # newline for neatness
+        else:
+            # TODO: list missing required options
+            raise RuntimeError(
+                "One or more required options not configured\n  (exception raised instead of displaying prompt as prompts are disabled)"
+            )
 
         # TODO: give users a chance to update invalid options with prompt, also say the options origin (e.g. config)
         valid = self._validate()

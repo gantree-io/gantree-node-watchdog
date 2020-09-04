@@ -48,6 +48,11 @@ OPTIONS: dict = {
         "promptable": False,
     },
     "node_secret": {"description": "PLACEHOLDER", "default": None, "promptable": False},
+    "prompt_missing": {
+        "description": "Prompt for missing required options",
+        "default": True,
+        "promptable": False,
+    },
 }
 
 
