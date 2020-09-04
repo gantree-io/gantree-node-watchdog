@@ -235,6 +235,8 @@ class Configuration:
 
             value = getattr(self, key)
             if value is not None:
+                if isinstance(value, bool):
+                    value = str(value)
                 len_value = len(value)
                 if len_value > longest_value:
                     longest_value = len_value
@@ -246,6 +248,8 @@ class Configuration:
             origin = self._key_origins[key]
             origin = "?" if origin is None else origin
             value = getattr(self, key)
+            if isinstance(value, bool):
+                value = str(value)
             value = "None" if value is None else value
             if origin is not None:
                 if self._censor_values:
