@@ -39,10 +39,9 @@ Stand-alone binaries can be found in [releases](https://github.com/gantree-io/ga
 
 | Package | Version  | Notes                                         |
 | ------- | -------- | --------------------------------------------- |
-| pipenv  | *latest* | -                                             |
-| pyenv   | *latest* | only if required python version not installed |
-| make    | *latest* | -                                             |
-
+| pipenv  | _latest_ | -                                             |
+| pyenv   | _latest_ | only if required python version not installed |
+| make    | _latest_ | -                                             |
 
 ### Steps
 
