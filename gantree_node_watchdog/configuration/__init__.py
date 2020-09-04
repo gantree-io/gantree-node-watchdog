@@ -87,10 +87,7 @@ class Configuration:
         for dk in self._defaults:
             if getattr(self, dk) is None:
                 dv: Union[str, Callable] = self._defaults[dk]
-                if isinstance(dv, str):
-                    setattr(self, dk, dv)
-                    self._key_origins[dk] = "Defaults"
-                else:
+                if callable(dv) == True:
                     try:
                         # print(f"Getting '{dk}' from {dv.__name__}()...")
                         # default_executions_ran = True
@@ -98,6 +95,9 @@ class Configuration:
                         self._key_origins[dk] = "Defaults (Executed)"
                     except Exception as e:
                         raise RuntimeError(f"Failed to execute callable default: {e}")
+                else:
+                    setattr(self, dk, dv)
+                    self._key_origins[dk] = "Defaults"
         if default_executions_ran:
             print()  # newline for neatness
 
