@@ -19,6 +19,12 @@ Instance monitoring client for Gantree
 
 `curl -o- https://raw.githubusercontent.com/gantree-io/gantree-node-watchdog/master/quick-install.sh | bash && cd gantree-node-watchdog-v*.*.*-linux && ./bin/gantree_node_watchdog`
 
+## Releases
+
+Stand-alone binaries can be found in [releases](https://github.com/gantree-io/gantree-node-watchdog/releases).
+
+[![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/gantree-io/gantree-node-watchdog?include_prereleases&logo=python)](https://github.com/gantree-io/gantree-node-watchdog/releases)
+
 ## Configuration
 
 GNW can be configured using a variety of methods.
@@ -146,12 +152,6 @@ To stop GNW
 ```bash
 pm2 del gnw
 ```
-
-## Releases
-
-Stand-alone binaries can be found in [releases](https://github.com/gantree-io/gantree-node-watchdog/releases).
-
-[![GitHub release (latest SemVer including pre-releases)](https://img.shields.io/github/v/release/gantree-io/gantree-node-watchdog?include_prereleases&logo=python)](https://github.com/gantree-io/gantree-node-watchdog/releases)
 
 ## Building
 
