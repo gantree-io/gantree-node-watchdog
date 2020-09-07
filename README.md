@@ -104,7 +104,7 @@ Now copy the `gantree_node_watchdog` binary to `/usr/local/bin/`
 cp [/path/to/gnw/binary] /usr/local/bin
 ```
 
-Finally configure all required options by either exporting the associated environment variables or specifying values in `~/.gnw_config.json`.
+Finally configure all [required options](#configuration) by either exporting the associated environment variables or specifying values in `~/.gnw_config.json`.
 
 ### Usage
 
