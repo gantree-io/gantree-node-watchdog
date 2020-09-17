@@ -1,5 +1,7 @@
 """Configuration metadata."""
 
+# TODO: change references to "options" accross project to "parameters"
+
 from .. import internal_error_message
 
 """Information on option dict:
