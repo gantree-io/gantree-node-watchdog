@@ -1,11 +1,13 @@
 """Various misc. utilities."""
-import requests
-import colorama
+import os
+import sys
 import shutil
 import json
 from pathlib import Path
 from typing import List, Callable
 
+import requests
+import colorama
 from ipify import get_ip
 from ipify.exceptions import ConnectionError, ServiceError
 
@@ -64,14 +66,29 @@ class printStatus:
 
             res = func(*args, **kwargs)
 
+            # TODO: address redundant code between fail/skip condition checking loops
             for fc in self.fail_conditions:
                 failed = fc(res)
+                failed_reason = None
+
+                if isinstance(failed, tuple):
+                    """If the fail condition returns a tuple, unpack it."""
+                    if len(failed) == 2:
+                        failed, failed_reason = failed
+
                 if isinstance(failed, bool):
                     if failed is True:
-                        print(self.on_fail + self.suffix)
+                        print(
+                            self.on_fail
+                            + (f" ({failed_reason})" if failed_reason else "")
+                            + self.suffix
+                        )
                         return res
                 else:
-                    return TypeError("Fail condition didn't return a bool")
+                    if isinstance(failed, Exception):
+                        return failed
+                    else:
+                        return TypeError("Fail condition didn't return a bool")
 
             for sc in self.skip_conditions:
                 skip = sc(res)
@@ -91,7 +108,10 @@ class printStatus:
                         )
                         return res
                 else:
-                    return TypeError("Skip condition didn't return a bool")
+                    if isinstance(skip, Exception):
+                        return skip
+                    else:
+                        return TypeError("Skip condition didn't return a bool")
 
             print(self.on_success + self.suffix)
             return res
@@ -193,3 +213,12 @@ def read_json(filepath):
 
     with open(filepath, "r") as f:
         return json.load(f)
+
+
+def is_terminal_interactive():
+    """Check if the active terminal is interactive."""
+    isatty = os.isatty(sys.stdout.fileno())
+    if isinstance(isatty, bool):
+        return isatty
+    else:
+        return RuntimeError("Expected returned value to be a boolean.")

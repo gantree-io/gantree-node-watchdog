@@ -8,6 +8,7 @@ import colorama
 
 from .art import gantree_art
 from .configuration import Configuration
+from .messages import node_secret_rejected
 from .metrics import metrics
 from .proxy import proxy
 from .utils import ascii_splash, Statistics
@@ -48,8 +49,8 @@ def main():
     )
     if isinstance(registration, Exception):
         raise registration
-    elif registration.status_code == 409:
-        # print("Node already registered.")
+    elif registration.status_code == 409:  # Conflict
+        # Node has already been registered
         pass
     else:
         reg_json = registration.json()
@@ -74,19 +75,31 @@ def main():
         )
 
     while True:
-        proxy_status = proxy.status(
-            hostname=config.proxy_hostname, node_secret=config.node_secret
-        )
+        try:
+            proxy_status = proxy.status(
+                hostname=config.proxy_hostname, node_secret=config.node_secret
+            )
 
-        if isinstance(proxy_status, Exception):
-            raise proxy_status
+            if isinstance(proxy_status, Exception):
+                raise proxy_status
 
-        else:
-            dashboard_status = proxy_status.json()["status"]["telemDashboard"]
-
-            if dashboard_status == "READY":
+            elif proxy_status.status_code == 403:  # Forbidden
                 break
 
+            else:
+                dashboard_status = proxy_status.json()["status"]["telemDashboard"]
+
+                if dashboard_status == "READY":
+                    break
+
+                time.sleep(10)
+
+        except KeyboardInterrupt:
+            print("\nCancelling...")
+            break
+
+        except Exception as e:
+            print(f"ERROR: {repr(e)}")
             time.sleep(10)
 
     print()  # newline for neatness
@@ -105,6 +118,9 @@ def main():
             if isinstance(scrape, Exception):
                 print(scrape)
                 raise RuntimeError(scrape)
+            elif scrape.status_code == 403:
+                print(node_secret_rejected(config))
+                break
 
             read_metrics = metrics.get(config.metrics_hostname)
             if isinstance(read_metrics, Exception):
@@ -127,4 +143,5 @@ def main():
         except Exception as e:
             print(f"Loop failed: {repr(e)}")
             stats.fail()
+            time.sleep(1)
             # raise e

@@ -1,7 +1,7 @@
 import requests
 import colorama
 
-from .conditions import is_409, dash_not_ready
+from .conditions import is_409, dash_not_ready, is_403
 from .utils import printStatus, expect200
 
 REGISTER_MESSAGE = (
@@ -41,16 +41,18 @@ class Proxy:
             },
         )
 
-    @printStatus(STATUS_MESSAGE, skip_conditions=[dash_not_ready])
-    @expect200()
+    @printStatus(
+        STATUS_MESSAGE, fail_conditions=[is_403], skip_conditions=[dash_not_ready]
+    )
+    @expect200(allowlist=[403])
     def status(self, hostname, node_secret):
         return requests.get(
             f"{hostname}/clientNode/status",
             headers={"Authorization": f"Node-Secret {node_secret}"},
         )
 
-    @printStatus(SCRAPE_MESSAGE)
-    @expect200()
+    @printStatus(SCRAPE_MESSAGE, fail_conditions=[is_403])
+    @expect200(allowlist=[403])
     def scrape(self, hostname, node_secret, ip_address):
         return requests.get(
             # f"{hostname}/clientNode/proxyScrape",

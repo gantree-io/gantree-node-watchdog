@@ -17,8 +17,19 @@ def is_false(item):
     return True if item is False else False
 
 
+def is_403(item):
+    """Return True if the item has a status_code of 403 (forbidden/unauthorized).
+    
+    Return TypeError if item doesn't have a status_code.
+    """
+    if hasattr(item, "status_code"):
+        return (True, "Forbidden") if item.status_code == 403 else False
+
+    return TypeError("is_403 cannot check item with missing status_code attribute")
+
+
 def is_409(item):
-    """Return True if the item has a status_code of 409.
+    """Return True if the item has a status_code of 409 (conflict).
     
     Return TypeError if item doesn't have a status_code.
     """
@@ -31,12 +42,21 @@ def is_409(item):
 def dash_not_ready(item):
     """Return True if the item doesn't contains a telemDashboard status other than ready.
 
-    Return ValueErro
+    Return ValueError if item doesn't return the expected data shape.
+
+    Return RuntimeError if item's .json() method raises an error.
     """
     if not hasattr(item, "json"):
         return ValueError("dash_not_ready cannot check item without a json method")
 
-    item_json = item.json()
+    item_json = None
+    try:
+        item_json = item.json()
+    except Exception as e:
+        return RuntimeError(
+            f"dash_not_ready encountered an error while running the item's .json() method:\n{e.__repr__()}"
+        )
+
     if not ("status" in item_json):
         return ValueError(
             "dash_not_ready cannot check item without a status key in content"
@@ -55,7 +75,7 @@ def dash_not_ready(item):
 
 def is_client_id_valid(client_id):
     exp = r"^[a-z\-0-9]{0,32}$"
-    m = re.match(exp, client_id, re.IGNORECASE)
+    m = re.match(exp, client_id)
     if m:
         return True
     else:

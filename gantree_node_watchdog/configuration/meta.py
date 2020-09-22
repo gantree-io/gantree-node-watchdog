@@ -1,5 +1,7 @@
 """Configuration metadata."""
 
+# TODO: change references to "options" accross project to "parameters"
+
 from .. import internal_error_message
 
 """Information on option dict:
@@ -13,13 +15,13 @@ from .. import internal_error_message
 """
 OPTIONS: dict = {
     "proxy_hostname": {
-        "description": "PLACEHOLDER",
-        "default": "PLACEHOLDER",
+        "description": "PLACEHOLDER",  # TODO: add description
+        "default": "https://api.gantree.io",
         "promptable": False,
     },
     "metrics_hostname": {
-        "description": "PLACEHOLDER",
-        "default": "PLACEHOLDER",
+        "description": "PLACEHOLDER",  # TODO: add description
+        "default": "PLACEHOLDER",  # TODO: add default
         "promptable": False,
     },
     "api_key": {
@@ -28,7 +30,7 @@ OPTIONS: dict = {
         "promptable": True,
     },
     "project_id": {
-        "description": "Name of network to register this node on",
+        "description": "Name of substrate network",
         "default": None,
         "promptable": True,
     },
@@ -39,7 +41,7 @@ OPTIONS: dict = {
     },
     "ip_address": {
         "description": "Public IP address for this node",
-        "default": "PLACEHOLDER",
+        "default": None,
         "promptable": False,
     },
     "node_id": {
@@ -48,6 +50,11 @@ OPTIONS: dict = {
         "promptable": False,
     },
     "node_secret": {"description": "PLACEHOLDER", "default": None, "promptable": False},
+    "prompt_missing": {
+        "description": "Prompt for missing required options",
+        "default": True,
+        "promptable": False,
+    },
 }
 
 

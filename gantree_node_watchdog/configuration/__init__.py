@@ -8,7 +8,7 @@ from typing import Dict, Union, Callable
 import colorama
 
 from ..conditions import is_false, is_client_id_valid
-from ..utils import printStatus, get_public_ip_addr, read_json
+from ..utils import printStatus, get_public_ip_addr, read_json, is_terminal_interactive
 from . import meta
 
 HAS_REG_DETAILS_MESSAGE = (
@@ -36,12 +36,14 @@ class Configuration:
         self.ip_address = None
         self.node_id = None
         self.node_secret = None
+        self.prompt_missing = None
 
         # TODO: move into options meta
         self._defaults = {
-            "proxy_hostname": "https://prometheus.gantree.io",
+            "proxy_hostname": "https://api.gantree.io",
             "metrics_hostname": "http://127.0.0.1:9615",
             "ip_address": get_public_ip_addr,
+            "prompt_missing": True,
         }
         # TODO: move into options meta
         self._required_options = ["api_key", "project_id", "client_id", "ip_address"]
@@ -87,10 +89,7 @@ class Configuration:
         for dk in self._defaults:
             if getattr(self, dk) is None:
                 dv: Union[str, Callable] = self._defaults[dk]
-                if isinstance(dv, str):
-                    setattr(self, dk, dv)
-                    self._key_origins[dk] = "Defaults"
-                else:
+                if callable(dv) == True:
                     try:
                         # print(f"Getting '{dk}' from {dv.__name__}()...")
                         # default_executions_ran = True
@@ -98,40 +97,55 @@ class Configuration:
                         self._key_origins[dk] = "Defaults (Executed)"
                     except Exception as e:
                         raise RuntimeError(f"Failed to execute callable default: {e}")
+                else:
+                    setattr(self, dk, dv)
+                    self._key_origins[dk] = "Defaults"
         if default_executions_ran:
             print()  # newline for neatness
 
-        """Prompt for missing values."""
-        prompt_help_displayed = False
-        for ro in self._required_options:
-            if getattr(self, ro) is None:
+        if self.prompt_missing:
+            """Prompt for missing values."""
+            prompt_help_displayed = False
+            is_interactive = is_terminal_interactive()
+            for ro in self._required_options:
+                if getattr(self, ro) is None:
 
-                if not prompt_help_displayed:
-                    print(
-                        "⮞ One or more required options couldn't be"
-                        + " found in your configuration file or environment variables."
-                        + "\n⮞ You'll be prompted for any values we need right now."
-                        + "\n⮞ Any information you enter will be stored in your configuration"
-                        + f" file ('{self._config_file}') and will be loaded when the"
-                        + " program is next executed."
-                        + "\n"
-                    )
-                    prompt_help_displayed = True
+                    if not prompt_help_displayed:
+                        print(
+                            "⮞ One or more required options couldn't be"
+                            + " found in your configuration file or environment variables."
+                            + "\n⮞ You'll be prompted for any values we need right now."
+                            + "\n⮞ Any information you enter will be stored in your configuration"
+                            + f" file ('{self._config_file}') and will be loaded when the"
+                            + " program is next executed."
+                            + "\n"
+                        )
+                        prompt_help_displayed = True
 
-                ro_input = input(
-                    colorama.Fore.LIGHTBLUE_EX
-                    + f"{meta.get_desc(ro)}: "
-                    + colorama.Style.RESET_ALL
-                )
+                    if is_interactive == True:
+                        ro_input = input(
+                            colorama.Fore.LIGHTBLUE_EX
+                            + f"{meta.get_desc(ro)}: "
+                            + colorama.Style.RESET_ALL
+                        )
+                    else:
+                        raise RuntimeError(
+                            "Cannot accept input for options requiring configuration in non-interactive terminal"
+                        )
 
-                self._write_option_to_config(ro, ro_input)
+                    self._write_option_to_config(ro, ro_input)
 
-                self._key_origins[ro] = "User Input"
+                    self._key_origins[ro] = "User Input"
 
-        if prompt_help_displayed:
-            print()  # newline for neatness
+            if prompt_help_displayed:
+                print()  # newline for neatness
+        else:
+            # TODO: list missing required options
+            raise RuntimeError(
+                "One or more required options not configured\n  (exception raised instead of displaying prompt as prompts are disabled)"
+            )
 
-        # TODO: give users a change to update invalid options with prompt, also say the options origin (e.g. config)
+        # TODO: give users a chance to update invalid options with prompt, also say the options origin (e.g. config)
         valid = self._validate()
         if isinstance(valid, Exception):
             print(valid)
@@ -229,6 +243,8 @@ class Configuration:
 
             value = getattr(self, key)
             if value is not None:
+                if isinstance(value, bool):
+                    value = str(value)
                 len_value = len(value)
                 if len_value > longest_value:
                     longest_value = len_value
@@ -240,6 +256,8 @@ class Configuration:
             origin = self._key_origins[key]
             origin = "?" if origin is None else origin
             value = getattr(self, key)
+            if isinstance(value, bool):
+                value = str(value)
             value = "None" if value is None else value
             if origin is not None:
                 if self._censor_values:

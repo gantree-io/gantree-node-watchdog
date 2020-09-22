@@ -1,5 +1,5 @@
 compile:
-	pyinstaller runner.py --onefile --name=gantree_node_watchdog
+	pipenv run pyinstaller runner.py --onefile --name=gantree_node_watchdog
 
 upload:
 	make compile
