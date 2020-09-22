@@ -1,13 +1,12 @@
 {
-	"folders": [
-		{
-			"path": "."
-		}
-	],
-	"settings": {
-		"python.linting.banditEnabled": true,
-		"python.linting.banditArgs": [
-			"--skip B322"
-		]
-	}
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "python.linting.banditEnabled": true,
+    "python.linting.banditArgs": ["--skip B322"],
+    "cSpell.words": ["Gantree", "grafana"]
+  }
 }
