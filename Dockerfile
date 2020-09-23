@@ -1,3 +1,4 @@
+# TODO: use different docker context. now only using binary (therefore python-specific context not necessary)
 
 FROM python:3
 
@@ -6,12 +7,7 @@ ENV WAIT_VERSION 2.7.2
 ADD https://github.com/ufoscout/docker-compose-wait/releases/download/$WAIT_VERSION/wait /wait
 RUN chmod +x /wait
 
-RUN pip install pipenv
-
-COPY . /watchdog
+COPY ./dist/gantree_node_watchdog /watchdog/gantree_node_watchdog
 WORKDIR /watchdog
 
-# this throws a couple of errors but seems to still work
-RUN pipenv install --system --deploy
-
-CMD ["python", "/watchdog/runner.py"]
+CMD ["/watchdog/gantree_node_watchdog"]
