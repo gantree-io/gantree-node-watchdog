@@ -47,7 +47,7 @@ class Proxy:
     @expect200(allowlist=[403])
     def status(self, hostname, node_secret):
         return requests.get(
-            f"{hostname}/clientNode/status",
+            f"{hostname}/clientNetwork/status",
             headers={"Authorization": f"Node-Secret {node_secret}"},
         )
 
