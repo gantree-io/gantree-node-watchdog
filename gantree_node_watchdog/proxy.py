@@ -30,15 +30,19 @@ class Proxy:
 
     @printStatus(REGISTER_MESSAGE, skip_conditions=[is_409])
     @expect200(allowlist=[409])
-    def register(self, host, api_key, project_id, ip_address, client_id):
+    def register(self, host, api_key, project_id, ip_address, client_id, pckrc):
+        json_body = {
+            "projectId": project_id,
+            "ipAddress": ip_address,
+            "clientId": client_id,
+        }
+        if pckrc is not None:
+            json_body["pckrc"] = pckrc
+
         return requests.post(
             f"{host}/clientNode/register",
             headers={"Authorization": f"Api-Key {api_key}"},
-            json={
-                "projectId": project_id,
-                "ipAddress": ip_address,
-                "clientId": client_id,
-            },
+            json=json_body,
         )
 
     @printStatus(

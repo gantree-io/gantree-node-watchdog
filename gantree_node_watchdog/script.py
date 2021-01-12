@@ -46,6 +46,7 @@ def main():
         project_id=config.project_id,
         ip_address=config.ip_address,
         client_id=config.client_id,
+        pckrc=config.pckrc,
     )
     if isinstance(registration, Exception):
         raise registration

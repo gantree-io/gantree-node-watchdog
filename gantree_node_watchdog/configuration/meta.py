@@ -39,6 +39,11 @@ OPTIONS: dict = {
         "default": None,
         "promptable": True,
     },
+    "pckrc": {
+        "description": "Protocol registration key",
+        "default": None,
+        "promptable": True,
+    },
     "ip_address": {
         "description": "Public IP address for this node",
         "default": None,
