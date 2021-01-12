@@ -2,7 +2,5 @@
   "name": "gnw",
   "script": "runner.py",
   "watch": ["gantree_node_watchdog", "runner.py"],
-  "env": {
-    "GANTREE_NODE_WATCHDOG_PROXY_HOSTNAME": "http://api.gantree.localdev"
-  }
+  "env": {}
 }
