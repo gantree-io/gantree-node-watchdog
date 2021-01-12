@@ -46,14 +46,14 @@ The following values must be configured for every installation
 
 Optionally, the following may also be configured
 
-| NAME             | ENVIRONMENT VARIABLE                     | CONFIGURATION FILE |
-| ---------------- | ---------------------------------------- | ------------------ |
-| IP Address       | `GANTREE_NODE_WATCHDOG_IP_ADDRESS`       | `ip_address`       |
-| Proxy Hostname   | `GANTREE_NODE_WATCHDOG_PROXY_HOSTNAME`   | `proxy_hostname`   |
-| Metrics Hostname | `GANTREE_NODE_WATCHDOG_METRICS_HOSTNAME` | `metrics_hostname` |
-| Node ID          | `GANTREE_NODE_WATCHDOG_NODE_ID`          | `node_id`          |
-| Node Secret      | `GANTREE_NODE_WATCHDOG_NODE_SECRET`      | `node_secret`      |
-| Prompt Missing   | `GANTREE_NODE_WATCHDOG_PROMPT_MISSING`   | `prompt_missing`   |
+| NAME           | ENVIRONMENT VARIABLE                   | CONFIGURATION FILE |
+| -------------- | -------------------------------------- | ------------------ |
+| IP Address     | `GANTREE_NODE_WATCHDOG_IP_ADDRESS`     | `ip_address`       |
+| Proxy Host     | `GANTREE_NODE_WATCHDOG_PROXY_HOST`     | `proxy_host`       |
+| Metrics Host   | `GANTREE_NODE_WATCHDOG_METRICS_HOST`   | `metrics_host`     |
+| Node ID        | `GANTREE_NODE_WATCHDOG_NODE_ID`        | `node_id`          |
+| Node Secret    | `GANTREE_NODE_WATCHDOG_NODE_SECRET`    | `node_secret`      |
+| Prompt Missing | `GANTREE_NODE_WATCHDOG_PROMPT_MISSING` | `prompt_missing`   |
 
 If any required values have not been configured, GNW will prompt you to enter them in your terminal.
 

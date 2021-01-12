@@ -14,12 +14,12 @@ from .. import internal_error_message
              - Holds no bearing as to if values can be overwritten by other methods.
 """
 OPTIONS: dict = {
-    "proxy_hostname": {
-        "description": "PLACEHOLDER",  # TODO: add description
+    "proxy_host": {
+        "description": "Metric proxying server (ports can be specified)",
         "default": "https://api.gantree.io",
         "promptable": False,
     },
-    "metrics_hostname": {
+    "metrics_host": {
         "description": "PLACEHOLDER",  # TODO: add description
         "default": "PLACEHOLDER",  # TODO: add default
         "promptable": False,

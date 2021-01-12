@@ -31,7 +31,7 @@ def main():
 
     print(config)
 
-    metrics_accessible = metrics.accessible(config.metrics_hostname, timeout=10)
+    metrics_accessible = metrics.accessible(config.metrics_host, timeout=10)
 
     if isinstance(metrics_accessible, Exception):
         print(metrics_accessible)
@@ -41,7 +41,7 @@ def main():
         raise RuntimeError("Unable to get metrics from local machine. Exiting early.")
 
     registration = proxy.register(
-        hostname=config.proxy_hostname,
+        host=config.proxy_host,
         api_key=config.api_key,
         project_id=config.project_id,
         ip_address=config.ip_address,
@@ -77,7 +77,7 @@ def main():
     while True:
         try:
             proxy_status = proxy.status(
-                hostname=config.proxy_hostname, node_secret=config.node_secret
+                host=config.proxy_host, node_secret=config.node_secret
             )
 
             if isinstance(proxy_status, Exception):
@@ -111,7 +111,7 @@ def main():
 
             # TODO: create timer decorator for this method
             scrape = proxy.scrape(
-                hostname=config.proxy_hostname,
+                host=config.proxy_host,
                 node_secret=config.node_secret,
                 ip_address=config.ip_address,
             )
@@ -122,12 +122,12 @@ def main():
                 print(node_secret_rejected(config))
                 break
 
-            read_metrics = metrics.get(config.metrics_hostname)
+            read_metrics = metrics.get(config.metrics_host)
             if isinstance(read_metrics, Exception):
                 raise read_metrics
 
             proxy.metrics(
-                hostname=config.proxy_hostname,
+                host=config.proxy_host,
                 node_secret=config.node_secret,
                 scrape_id=scrape.json()["scrapeId"],
                 metrics_response=read_metrics.content.decode("utf-8"),

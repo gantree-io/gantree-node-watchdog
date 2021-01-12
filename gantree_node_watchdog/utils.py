@@ -147,7 +147,7 @@ class expect200:
                     )
                     + f" got {res.status_code}: {res.reason}"
                     + (
-                        f"\nPerhaps your hostnames are misconfigured?"
+                        f"\nPerhaps your hosts are misconfigured?"
                         if res.status_code == 404
                         else ""
                     )
