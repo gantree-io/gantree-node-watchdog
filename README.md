@@ -48,6 +48,7 @@ Optionally, the following may also be configured
 
 | NAME           | ENVIRONMENT VARIABLE                   | CONFIGURATION FILE |
 | -------------- | -------------------------------------- | ------------------ |
+| PCKRC          | `GANTREE_NODE_WATCHDOG_PCKRC`          | `pckrc`            |
 | IP Address     | `GANTREE_NODE_WATCHDOG_IP_ADDRESS`     | `ip_address`       |
 | Proxy Host     | `GANTREE_NODE_WATCHDOG_PROXY_HOST`     | `proxy_host`       |
 | Metrics Host   | `GANTREE_NODE_WATCHDOG_METRICS_HOST`   | `metrics_host`     |
