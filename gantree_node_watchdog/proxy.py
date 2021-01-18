@@ -30,41 +30,45 @@ class Proxy:
 
     @printStatus(REGISTER_MESSAGE, skip_conditions=[is_409])
     @expect200(allowlist=[409])
-    def register(self, hostname, api_key, project_id, ip_address, client_id):
+    def register(self, host, api_key, project_id, ip_address, client_id, pckrc):
+        json_body = {
+            "projectId": project_id,
+            "ipAddress": ip_address,
+            "clientId": client_id,
+        }
+        if pckrc is not None:
+            json_body["pckrc"] = pckrc
+
         return requests.post(
-            f"{hostname}/clientNode/register",
+            f"{host}/clientNode/register",
             headers={"Authorization": f"Api-Key {api_key}"},
-            json={
-                "projectId": project_id,
-                "ipAddress": ip_address,
-                "clientId": client_id,
-            },
+            json=json_body,
         )
 
     @printStatus(
         STATUS_MESSAGE, fail_conditions=[is_403], skip_conditions=[dash_not_ready]
     )
     @expect200(allowlist=[403])
-    def status(self, hostname, node_secret):
+    def status(self, host, node_secret):
         return requests.get(
-            f"{hostname}/clientNode/status",
+            f"{host}/clientNetwork/status",
             headers={"Authorization": f"Node-Secret {node_secret}"},
         )
 
     @printStatus(SCRAPE_MESSAGE, fail_conditions=[is_403])
     @expect200(allowlist=[403])
-    def scrape(self, hostname, node_secret, ip_address):
+    def scrape(self, host, node_secret, ip_address):
         return requests.get(
-            # f"{hostname}/clientNode/proxyScrape",
-            f"{hostname}/clientNode/proxyScrape",
+            # f"{host}/clientNode/proxyScrape",
+            f"{host}/clientNode/proxyScrape",
             headers={"Authorization": f"Node-Secret {node_secret}"},
         )
 
     @printStatus(METRICS_MESSAGE)
     @expect200()
-    def metrics(self, hostname, node_secret, scrape_id, metrics_response):
+    def metrics(self, host, node_secret, scrape_id, metrics_response):
         return requests.post(
-            f"{hostname}/clientNode/proxyMetrics",
+            f"{host}/clientNode/proxyMetrics",
             headers={"Authorization": f"Node-Secret {node_secret}"},
             json={"scrapeId": scrape_id, "metricsResponse": metrics_response},
         )

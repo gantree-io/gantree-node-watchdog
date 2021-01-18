@@ -1,5 +1,5 @@
-export GANTREE_NODE_WATCHDOG_PROXY_HOSTNAME="https://prometheus.gantree.io"
-export GANTREE_NODE_WATCHDOG_METRICS_HOSTNAME="http://127.0.0.1:9615"
+export GANTREE_NODE_WATCHDOG_PROXY_HOST="https://prometheus.gantree.io"
+export GANTREE_NODE_WATCHDOG_METRICS_HOST="http://127.0.0.1:9615"
 export GANTREE_NODE_WATCHDOG_API_KEY="a123bc45-1ab2-1234-1abc-a12345678910"
 export GANTREE_NODE_WATCHDOG_PROJECT_ID="example-network"
 export GANTREE_NODE_WATCHDOG_IP_ADDRESS="123.456.7.89"  # overrides automatically obtained IP address

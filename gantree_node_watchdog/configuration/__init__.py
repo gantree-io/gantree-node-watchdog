@@ -28,11 +28,12 @@ class Configuration:
 
     def __init__(self, config_file: str = None, censor_values: bool = True) -> None:
         """See class docstring."""
-        self.proxy_hostname = None
-        self.metrics_hostname = None
+        self.proxy_host = None
+        self.metrics_host = None
         self.api_key = None
         self.project_id = None
         self.client_id = None
+        self.pckrc = None
         self.ip_address = None
         self.node_id = None
         self.node_secret = None
@@ -40,8 +41,8 @@ class Configuration:
 
         # TODO: move into options meta
         self._defaults = {
-            "proxy_hostname": "https://api.gantree.io",
-            "metrics_hostname": "http://127.0.0.1:9615",
+            "proxy_host": "https://api.gantree.io",
+            "metrics_host": "http://127.0.0.1:9615",
             "ip_address": get_public_ip_addr,
             "prompt_missing": True,
         }
