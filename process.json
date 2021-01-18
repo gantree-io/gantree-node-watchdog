@@ -1,0 +1,6 @@
+{
+  "name": "gnw",
+  "script": "runner.py",
+  "watch": ["gantree_node_watchdog", "runner.py"],
+  "env": {}
+}

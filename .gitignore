@@ -1,6 +1,7 @@
 # Sensitive data
 /setup_env_vars.sh
 /.gnw_config.json
+/.gnw_config - *.json
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

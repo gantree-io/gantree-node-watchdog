@@ -27,22 +27,22 @@ class Metrics:
         """See class docstring."""
         pass
 
-    def _get(self, hostname, timeout):
+    def _get(self, host, timeout):
         try:
-            return requests.get(f"{hostname}/metrics", timeout=timeout)
+            return requests.get(f"{host}/metrics", timeout=timeout)
         except Exception as e:
             return e
 
     @printStatus(GET_MESSAGE)
     @expect200()
-    def get(self, hostname, timeout=5):
+    def get(self, host, timeout=5):
         """Get local metrics."""
-        return self._get(hostname=hostname, timeout=timeout)
+        return self._get(host=host, timeout=timeout)
 
     @printStatus(ACCESSIBLE_MESSAGE, fail_conditions=[is_false])
-    def accessible(self, hostname, timeout) -> Union[bool, Exception]:
+    def accessible(self, host, timeout) -> Union[bool, Exception]:
         """Return True if local metrics can be fetched."""
-        metrics = self._get(hostname=hostname, timeout=timeout)
+        metrics = self._get(host=host, timeout=timeout)
 
         if isinstance(metrics, Exception):
             return metrics
