@@ -1,0 +1,12 @@
+[Unit]
+Description=Gantree Node Watchdog
+After=network.target
+
+[Service]
+WorkingDirectory=/var/lib/gantree/gnw
+Type=simple
+Restart=always
+ExecStart=/usr/local/bin/gantree_node_watchdog
+
+[Install]
+WantedBy=multi-user.target
