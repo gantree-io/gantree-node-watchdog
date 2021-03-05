@@ -81,16 +81,17 @@ To stop GNW
 
 ### Installation
 
-Create the file `gnw.service` under `/etc/systemd/user/` with the following contents:
+Create the file `gnw.service` under `/etc/systemd/system/` with the following contents:
 
 ```s
-# Contents of /etc/systemd/user/gnw.service
+# Contents of /etc/systemd/system/gnw.service
 
 [Unit]
 Description=Gantree Node Watchdog
 After=network.target
 
 [Service]
+WorkingDirectory=/var/lib/gantree/gnw
 Type=simple
 Restart=always
 ExecStart=/usr/local/bin/gantree_node_watchdog
