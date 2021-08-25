@@ -4,7 +4,8 @@ import os
 import time
 
 import requests
-import colorama
+
+# import colorama
 
 from .art import gantree_art
 from .configuration import Configuration
@@ -13,16 +14,26 @@ from .metrics import metrics
 from .proxy import proxy
 from .utils import ascii_splash, Statistics
 
-colorama.init()
+# colorama.init()
 
 
 def main():
     """Execute with runner."""
     print(
         ascii_splash(
-            gantree_art, colorama.Fore.BLACK, colorama.Back.LIGHTYELLOW_EX, banner=True
+            gantree_art,
+            # colorama.Fore.BLACK,  # TEMP: DISABLE COLOR
+            "",
+            # colorama.Back.LIGHTYELLOW_EX,  # TEMP: DISABLE COLOR
+            "",
+            banner=True,
         )
         + "\n"
+    )
+
+    # HACK(Denver): mark temp version
+    print(
+        f"[[[WARNING]]]: DEBUGGING VERSION, NOT FOR GENERAL DISTRIBUTION - ASCII-CRASH/ANAMIX"
     )
 
     stats = Statistics()

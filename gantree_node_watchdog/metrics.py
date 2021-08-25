@@ -1,19 +1,22 @@
 """Module for fetching metrics."""
 
 import requests
-import colorama
+
+# import colorama
 from typing import Union
 
 from .utils import printStatus, expect200
 from .conditions import is_false
 
 GET_MESSAGE = (
-    colorama.Fore.LIGHTYELLOW_EX + "Getting metrics... " + colorama.Style.RESET_ALL
+    # colorama.Fore.LIGHTYELLOW_EX +  # TEMP: DISABLE COLOR
+    "Getting metrics... "
+    # + colorama.Style.RESET_ALL  # TEMP: DISABLE COLOR
 )
 ACCESSIBLE_MESSAGE = (
-    colorama.Fore.LIGHTBLUE_EX
-    + "Checking local metrics server is online... "
-    + colorama.Style.RESET_ALL
+    # colorama.Fore.LIGHTBLUE_EX +  # TEMP: DISABLE COLOR
+    "Checking local metrics server is online... "
+    # + colorama.Style.RESET_ALL  # TEMP: DISABLE COLOR
 )
 
 # TODO: note about not holding state

@@ -1,26 +1,29 @@
 import requests
-import colorama
+
+# import colorama
 
 from .conditions import is_409, dash_not_ready, is_403
 from .utils import printStatus, expect200
 
 REGISTER_MESSAGE = (
-    colorama.Fore.LIGHTBLUE_EX + "Registering node... " + colorama.Style.RESET_ALL
+    # colorama.Fore.LIGHTBLUE_EX +  # TEMP: DISABLE COLOR
+    "Registering node... "
+    # + colorama.Style.RESET_ALL  # TEMP: DISABLE COLOR
 )
 STATUS_MESSAGE = (
-    colorama.Fore.LIGHTBLUE_EX
-    + "Waiting for telemetry dashboard... "
-    + colorama.Style.RESET_ALL
+    # colorama.Fore.LIGHTBLUE_EX +  # TEMP: DISABLE COLOR
+    "Waiting for telemetry dashboard... "
+    # + colorama.Style.RESET_ALL  # TEMP: DISABLE COLOR
 )
 SCRAPE_MESSAGE = (
-    colorama.Fore.LIGHTYELLOW_EX
-    + "Waiting for a scrape request from the proxy... "
-    + colorama.Style.RESET_ALL
+    # colorama.Fore.LIGHTYELLOW_EX +  # TEMP: DISABLE COLOR
+    "Waiting for a scrape request from the proxy... "
+    # + colorama.Style.RESET_ALL  # TEMP: DISABLE COLOR
 )
 METRICS_MESSAGE = (
-    colorama.Fore.LIGHTYELLOW_EX
-    + "Sending metrics to proxy... "
-    + colorama.Style.RESET_ALL
+    # colorama.Fore.LIGHTYELLOW_EX +  # TEMP: DISABLE COLOR
+    "Sending metrics to proxy... "
+    # + colorama.Style.RESET_ALL  # TEMP: DISABLE COLOR
 )
 
 

@@ -7,12 +7,18 @@ from pathlib import Path
 from typing import List, Callable
 
 import requests
-import colorama
+
+# import colorama
 from ipify import get_ip
 from ipify.exceptions import ConnectionError, ServiceError
 
 from .conditions import is_exception
 from .exceptions import Expected200Error
+
+# HACK(Denver): disables the splash, being used to debug encoding issues
+HACK_splash_disabled = (
+    True if os.getenv("GANTREE_NODE_WATCHDOG_DISABLE_SPLASH") != None else False
+)
 
 
 def get_public_ip_addr():
@@ -45,9 +51,15 @@ class printStatus:
         action: str,
         on_success: str = "OK",
         on_fail: str = (
-            colorama.Fore.WHITE + colorama.Back.RED + "FAIL" + colorama.Style.RESET_ALL
+            # colorama.Fore.WHITE + colorama.Back.RED +  # TEMP: DISABLE COLOR
+            "FAIL"
+            # + colorama.Style.RESET_ALL  # TEMP: DISABLE COLOR
         ),
-        on_skip: str = (colorama.Fore.YELLOW + "SKIP" + colorama.Style.RESET_ALL),
+        on_skip: str = (
+            # colorama.Fore.YELLOW +  # TEMP: DISABLE COLOR
+            "SKIP"
+            # + colorama.Style.RESET_ALL  # TEMP: DISABLE COLOR
+        ),
         suffix: str = "",
         fail_conditions: List[Callable[[str], None]] = [],
         skip_conditions: List[Callable[[str], None]] = [],
@@ -159,6 +171,10 @@ class expect200:
 
 
 def ascii_splash(art, fore, back, banner=False):
+    # HACK(Denver): disable the splash, used to debug ascii encoding crash
+    if HACK_splash_disabled is True:
+        return ""
+
     lines = art.split("\n")
     t_columns, _t_lines = shutil.get_terminal_size((80, 20))
     for line_n in range(len(lines)):
@@ -166,12 +182,12 @@ def ascii_splash(art, fore, back, banner=False):
             fore
             + back
             + (f"{lines[line_n]:^{t_columns}}" if banner else lines[line_n])
-            + colorama.Style.RESET_ALL
+            # + colorama.Style.RESET_ALL  # TEMP: DISABLE COLOR
         )
     return (
-        (colorama.Back.LIGHTYELLOW_EX if banner else "")
-        + "\n"
-        + colorama.Style.RESET_ALL
+        # (colorama.Back.LIGHTYELLOW_EX if banner else "")  # TEMP: DISABLE COLOR
+        "\n"
+        # + colorama.Style.RESET_ALL  # TEMP: DISABLE COLOR
     ).join(lines)
 
 
@@ -187,9 +203,12 @@ class Statistics:
         self.failures += 1
 
     def print_oneline(self):
-        c_default = colorama.Fore.LIGHTBLACK_EX
-        c_success = colorama.Fore.GREEN
-        c_fail = colorama.Fore.RED
+        # c_default = colorama.Fore.LIGHTBLACK_EX  # TEMP: DISABLE COLOR
+        c_default = ""  # TEMP: DISABLE COLOR
+        # c_success = colorama.Fore.GREEN  # TEMP: DISABLE COLOR
+        c_success = ""  # TEMP: DISABLE COLOR
+        # c_fail = colorama.Fore.RED  # TEMP: DISABLE COLOR
+        c_fail = ""  # TEMP: DISABLE COLOR
         print(
             c_default
             + "[ STATUS ] ---- [ Proxied Requests: "
@@ -201,7 +220,7 @@ class Statistics:
             + str(self.failures)
             + c_default
             + " ]"
-            + colorama.Style.RESET_ALL
+            # + colorama.Style.RESET_ALL  # TEMP: DISABLE COLOR
         )
 
 

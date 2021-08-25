@@ -5,21 +5,21 @@ import json
 from pathlib import Path
 from typing import Dict, Union, Callable
 
-import colorama
+# import colorama
 
 from ..conditions import is_false, is_client_id_valid
 from ..utils import printStatus, get_public_ip_addr, read_json, is_terminal_interactive
 from . import meta
 
 HAS_REG_DETAILS_MESSAGE = (
-    colorama.Fore.LIGHTBLUE_EX
-    + "Checking registration details... "
-    + colorama.Style.RESET_ALL
+    # colorama.Fore.LIGHTBLUE_EX +  # TEMP: DISABLE COLOR
+    "Checking registration details... "
+    # + colorama.Style.RESET_ALL  # TEMP: DISABLE COLOR
 )
 VALIDATION_MESSAGE = (
-    colorama.Fore.LIGHTBLUE_EX
-    + "Validating configuration... "
-    + colorama.Style.RESET_ALL
+    # colorama.Fore.LIGHTBLUE_EX +  # TEMP: DISABLE COLOR
+    "Validating configuration... "
+    # + colorama.Style.RESET_ALL  # TEMP: DISABLE COLOR
 )
 
 
@@ -125,9 +125,9 @@ class Configuration:
 
                     if is_interactive == True:
                         ro_input = input(
-                            colorama.Fore.LIGHTBLUE_EX
-                            + f"{meta.get_desc(ro)}: "
-                            + colorama.Style.RESET_ALL
+                            # colorama.Fore.LIGHTBLUE_EX +  # TEMP: DISABLE COLOR
+                            f"{meta.get_desc(ro)}: "
+                            # + colorama.Style.RESET_ALL  # TEMP: DISABLE COLOR
                         )
                     else:
                         raise RuntimeError(
