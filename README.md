@@ -4,9 +4,9 @@
     <a href="https://discord.gg/BsWVddN" alt="Discord">
         <img alt="Discord" src="https://img.shields.io/discord/719451945345220658?logo=Discord"></a>
     <a href="https://gantree.io" alt="Website">
-        <img alt="Website" src="https://img.shields.io/website?down_color=red&down_message=offline&label=gantree.io&up_color=green&up_message=online&url=https%3A%2F%2Fgantree.io"></a>
+        <img alt="gantree.io status" src="https://img.shields.io/badge/gantree.io-discontinued-lightgrey"></a>
     <a href="https://app.gantree.io" alt="Web App">
-        <img alt="Website" src="https://img.shields.io/website?down_color=red&down_message=offline&label=web%20app&up_color=green&up_message=online&url=https%3A%2F%2Fapp.gantree.io"></a>
+        <img alt="Website" src="https://img.shields.io/badge/web%20app-discontinued-lightgrey"></a>
     <a alt="OSS Lifecycle">
         <img alt="OSS Lifecycle" src="https://img.shields.io/osslifecycle/gantree-io/gantree-node-watchdog"></a>
 </p>
